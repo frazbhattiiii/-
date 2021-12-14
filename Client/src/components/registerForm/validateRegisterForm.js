@@ -1,6 +1,9 @@
-export default function validateRegisterForm({ name, email, password, confirmPass,address,city,portfolio,age }) {
-	if (!name.trim()) {
-		return 'Username required';
+export default function validateRegisterForm({ firstName,lastName, email, password, confirmPass,address,city,phone_number,age }) {
+	if (!firstName.trim()) {
+		return 'First Name required';
+	}
+	if (!lastName.trim()) {
+		return 'Last Name required';
 	}
   if(!address.trim()){
     return 'Address Required';
@@ -18,12 +21,12 @@ export default function validateRegisterForm({ name, email, password, confirmPas
 
 	const regex =
 		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    portfolio=portfolio.toLowerCase();
-    if(!portfolio.trim()){
-      return 'Portfolio Required';
+    
+    if(!phone_number.trim()){
+      return 'phone Number Required';
     }
-    else if (portfolio!='donor' && portfolio!='receiver'){
-        return 'Invalid input (Enter donor and receiver only)';
+    else if (phone_number.length!==11){
+        return 'Enter 11-digts (0300xxxxxxx)';
         
     }
     if(!city.trim()){
