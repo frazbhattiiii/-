@@ -49,20 +49,28 @@ const Form = () => {
 				email: email,
 				age: age
 			},
-		)
-		setfirstName('');
-		setLastName('');
-		setEmail('');
-		setCity('');
-		setAge('');
-
-		setphone_number('');
-		setPassword('');
-		setAddress('');
-		setConfirmPass('');
-		setError(null);
-		setSuccess('Application was submitted!');
-
+		).then((response)=>{
+			console.log(response)
+			if(response.data==null){
+				setfirstName('');
+				setLastName('');
+				setEmail('');
+				setCity('');
+				setAge('');
+		
+				setphone_number('');
+				setPassword('');
+				setAddress('');
+				setConfirmPass('');
+				setError(null);
+				setSuccess('Application was submitted!');		
+			}
+			else{
+				setSuccess(null)
+				setError(response.data.sqlMessage)
+			}
+		})
+		
 	};
 
 	const messageVariants = {

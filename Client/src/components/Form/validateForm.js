@@ -1,7 +1,5 @@
-export default function validateForm({ name, email, password, confirmPass }) {
-	if (!name.trim()) {
-		return 'Username required';
-	}
+export default function validateForm({ email, password, confirmPass }) {
+
 	// else if (!/^[A-Za-z]+/.test(name.trim())) {
 	//   errors.name = 'Enter a valid name';
 	// }
@@ -15,8 +13,6 @@ export default function validateForm({ name, email, password, confirmPass }) {
 	}
 	if (!password) {
 		return 'Password is required';
-	} else if (password.length < 6) {
-		return 'Password needs to be 6 characters or more';
 	}
 
 

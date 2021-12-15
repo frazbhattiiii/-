@@ -14,7 +14,7 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
 app.post("/api/insert/user",(req,res)=>{
-    console.log(req.body.first_name)
+    
     const first_name = req.body.first_name
     const last_name = req.body.last_name
     const password = req.body.password
@@ -27,9 +27,22 @@ app.post("/api/insert/user",(req,res)=>{
     const sqlInsert = "insert into user (first_name,last_name,password,phone_number,city,full_address,email,age)" +
                       "value (?,?,?,?,?,?,?,?)"
     db.query(sqlInsert,[first_name,last_name,password,phone_number,city,full_address,email,age],(err,result)=>{
-        console.log(err)
+        res.send(err);
     })    
 })
+
+app.post("/api/signIn/user",(req,res)=>{
+    const email = req.body.email
+    const password = req.body.password
+    console.log(email + password)
+    const sqlSelect = "select email, password from user where"+
+                      " email = ? and password = ?"
+    db.query(sqlSelect,[email,password],(err,result)=>{
+        res.send(result)
+    })                  
+
+})
+
 
 app.get("/",(req,res)=>{
     res.send("Hello World")    
