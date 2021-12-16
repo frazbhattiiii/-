@@ -13,6 +13,12 @@ app.use(cors())
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
+const user = {
+    email: "",
+    password:""
+}
+
+//Register Form
 app.post("/api/insert/user",(req,res)=>{
     
     const first_name = req.body.first_name
@@ -31,18 +37,26 @@ app.post("/api/insert/user",(req,res)=>{
     })    
 })
 
+//SignIn form
 app.post("/api/signIn/user",(req,res)=>{
     const email = req.body.email
     const password = req.body.password
-    console.log(email + password)
     const sqlSelect = "select email, password from user where"+
                       " email = ? and password = ?"
     db.query(sqlSelect,[email,password],(err,result)=>{
+        if(result.length===1){
+            user.email = result[0].email
+            user.password = result[0].password
+        }
         res.send(result)
     })                  
 
 })
 
+app.post("/api/currentUser",(req,res)=>{
+    console.log("Current user -> " + user)
+    res.send(user)
+})
 
 app.get("/",(req,res)=>{
     res.send("Hello World")    

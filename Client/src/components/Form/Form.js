@@ -69,17 +69,14 @@ const Form = () => {
 				password: password,
 			}
 		).then((response)=>{
-			if (response.data[0].email === email && response.data[0].password === password) {
-				console.log(true);
+			if(response.data.length===1){
 				setEmail('');
 				setPassword('');
 				//setloggedIn(true);
 				routeChange();
 
-
 			}
 			else {
-				console.log(false);
 				setError('Please Enter some valid email or password or register for new user');
 				return
 			}
