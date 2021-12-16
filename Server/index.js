@@ -54,8 +54,14 @@ app.post("/api/signIn/user",(req,res)=>{
 })
 
 app.post("/api/currentUser",(req,res)=>{
-    console.log("Current user -> " + user)
-    res.send(user)
+    console.log("Current user -> " + user.email + " " + user.password)
+    res.send(user.email)
+})
+app.post("/api/signOut/currentUser",(req,res)=>{
+    user.email = ""
+    user.password = ""
+    console.log("Current user -> " + user.email + " " + user.password)
+    res.send(true)
 })
 
 app.get("/",(req,res)=>{

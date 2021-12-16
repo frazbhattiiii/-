@@ -13,7 +13,6 @@ import {
 } from './FormStyles';
 import { Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import { signupData } from '../../data/signupData';
 import { Container } from '../../globalStyles';
 import validateForm from './validateForm';
 import { Link } from "react-router-dom";
@@ -77,7 +76,7 @@ const Form = () => {
 
 			}
 			else {
-				setError('Please Enter some valid email or password or register for new user');
+				setError('Please Enter valid email or password');
 				return
 			}
 		})
