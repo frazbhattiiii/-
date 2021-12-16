@@ -11,31 +11,53 @@ import {
 	FormButton,
 	FormTitle,
 } from './FormStyles';
+
 import { Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+
 import { Container } from '../../globalStyles';
 import validateForm from './validateForm';
 import { Link } from "react-router-dom";
-import Axios from 'axios';
-
+import Navbar from '../Navbar/Navbar';
+let getName='';
+let getEmail='';
+let getPassword='';
+let index;
 const Form = () => {
 
+	const[loggedIn, setloggedIn]= useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState(null);
+	const [success, setSuccess] = useState(null);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const resultError = validateForm({ email, password });
-
+	
+	
+		const resultError = validateForm({  email, password });
+		
 		if (resultError !== null) {
 			setError(resultError);
 			return;
 		}
-		check()
+
+		
+
+		getEmail=email;
+		getPassword = password;
+	
+
+	
+	
+
+		setEmail('');
+		setPassword('');
+		setError(null);
+		setSuccess('Please Enter some valid email or password or register for new user');
 	};
 
-
+	
 
 	const messageVariants = {
 		hidden: { y: 30, opacity: 0 },
@@ -43,6 +65,7 @@ const Form = () => {
 	};
 
 	const formData = [
+		
 		{ label: 'Email', value: email, onChange: (e) => setEmail(e.target.value), type: 'email' },
 		{
 			label: 'Password',
@@ -50,92 +73,104 @@ const Form = () => {
 			onChange: (e) => setPassword(e.target.value),
 			type: 'password',
 		},
-
+		
 	];
 	const history = useHistory();
 
-	const routeChange = () => {
-
-		let path = `/newHome`;
-		history.push(path);
-
-	}
-	const check = () => {
-
-		Axios.post("http://localhost:3001/api/signIn/user",
-			{
-				email: email,
-				password: password,
-			}
-		).then((response)=>{
-			if(response.data.length===1){
-				setEmail('');
-				setPassword('');
+  const routeChange = () =>{ 
+	
+    let path = `/newHome`; 
+    history.push(path);
+		
+  }
+	const check= () =>{
+		signupData.map((data,index)=>
+		{console.log(email,password);
+			if (data.email===email && data.password===password) {
+				console.log(true);
+				alert("Successfully Logged In ");
 				//setloggedIn(true);
 				routeChange();
-
+				
+				
 			}
+
+
 			else {
 				setError('Please Enter valid email or password');
 				return
+
 			}
 		})
 	}
 
 
 	return (
-		<FormSection>
-			<Container>
-				<FormRow>
-					<FormColumn small>
-						<FormTitle>Sign in</FormTitle>
-						<FormWrapper onSubmit={handleSubmit}>
-							{formData.map((el, index) => (
-								<FormInputRow key={index}>
-									<FormLabel>{el.label}</FormLabel>
-									<FormInput
-										type={el.type}
-										placeholder={`Enter your ${el.label.toLocaleLowerCase()}`}
-										value={el.value}
-										onChange={el.onChange}
-									/>
-								</FormInputRow>
-							))}
+    <FormSection>
+      <Container>
+        <FormRow>
+          <FormColumn small>
+            <FormTitle>Sign in</FormTitle>
+            <FormWrapper onSubmit={handleSubmit}>
+              {formData.map((el, index) => (
+                <FormInputRow key={index}>
+                  <FormLabel>{el.label}</FormLabel>
+                  <FormInput
+                    type={el.type}
+                    placeholder={`Enter your ${el.label.toLocaleLowerCase()}`}
+                    value={el.value}
+                    onChange={el.onChange}
+                  />
+                </FormInputRow>
+              ))}
 
-							<FormButton type="submit">Signin</FormButton>
+              <FormButton type="submit" onClick= {check}>Signin</FormButton>
 							<Typography variant="button" textColor="text" fontWeight="regular">
-								Don&apos;t have an account?{" "}
-								<Typography
-									component={Link}
-									to="/register"
-									variant="button"
-									textColor="info"
-									fontWeight="medium"
-									textGradient
-								>
-									Sign up
-								</Typography>
-							</Typography>
+            Don&apos;t have an account?{" "}
+            <Typography
+              component={Link}
+              to="/register"
+              variant="button"
+              textColor="info"
+              fontWeight="medium"
+              textGradient
+            >
+              Sign up
+            </Typography>
+          </Typography>
 
+							
+            </FormWrapper>
 
-						</FormWrapper>
+            {error && (
+              <FormMessage
+                variants={messageVariants}
+                initial="hidden"
+                animate="animate"
+                error
+              >
+                {error}
+              </FormMessage>
+            )}
 
-						{error && (
-							<FormMessage
-								variants={messageVariants}
-								initial="hidden"
-								animate="animate"
-								error
-							>
-								{error}
-							</FormMessage>
-						)}
-					</FormColumn>
-				</FormRow>
-			</Container>
-		</FormSection>
-	);
+           
 
+            {success && (
+              <FormMessage
+                variants={messageVariants}
+                initial="hidden"
+                animate="animate"
+                key={index}
+              >
+                {success}
+              </FormMessage>
+            )}
+          </FormColumn>
+        </FormRow>
+      </Container>
+    </FormSection>
+  );
+	
 };
 
 export default Form;
