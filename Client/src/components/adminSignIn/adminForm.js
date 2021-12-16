@@ -45,7 +45,7 @@ const AdminForm = () => {
     
 
     
-      alert('Your Request is submitted and you will receive the response Shortly!')
+      alert('Successfully Logged In!')
 
       
         
@@ -90,7 +90,7 @@ const AdminForm = () => {
   const history = useHistory();
   const routeChange = () =>{ 
 	
-    let path = `/receive`; 
+    let path = `/admin`; 
     history.push(path);
     
 		

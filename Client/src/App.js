@@ -20,10 +20,12 @@ import NewHome from './pages/AfterLogin';
 import Contact from './pages/Contact';
 import All from './pages/allCategoiresPage';
 import About from './pages/About';
+import adminSide from './pages/adminSide';
 import EligibleForm from './pages/EligiblePage';
 import DonationFormPage from './pages/DonationForm';
 import CreditPage from './pages/CreditPage';
 import adminSignIn from './pages/adminSignIn';
+import EmployeeCreationPage from './pages/employeeCreationPage';
 function App() {
 	 const [signedIn, setSignedIn] = useState(true);
 	return (
@@ -37,6 +39,8 @@ function App() {
 				<Route path="/about" exact component={About} />
 				<Route path="/admin-signIn" exact component={adminSignIn} />
 				<Route path="/admEmp" exact component={admEmp} />
+				<Route path="/admin" exact component={adminSide} />
+				<Route path="/create-Employee" exact component={EmployeeCreationPage} />
 				<Route path="/signin" exact component={SignUp} />
 				<Route path="/eligibility" exact component={EligibleForm} />
 				<Route path="/new-pricing" exact component={NewPricing} />
