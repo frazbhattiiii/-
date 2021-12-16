@@ -18,5 +18,10 @@ export const data = [
 		text: 'Contact',
 		id: 'contact',
 	},
+	{
+		to:'/',
+		text: 'Sign Out',
+		id: 'signOut'
+	}
 	
 ];

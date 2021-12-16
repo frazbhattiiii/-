@@ -11,10 +11,10 @@ import {
 	FormButton,
 	FormTitle,
 } from './FormStyles';
-import styles from "./typographyStyle";
-import {  Typography } from "@material-ui/core";
-import {useHistory} from  "react-router-dom";
-import {signupData} from '../../data/signupData';
+
+import { Typography } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+
 import { Container } from '../../globalStyles';
 import validateForm from './validateForm';
 import { Link } from "react-router-dom";
@@ -94,8 +94,12 @@ const Form = () => {
 				
 				
 			}
-			else{
-				console.log(false);
+
+
+			else {
+				setError('Please Enter valid email or password');
+				return
+
 			}
 		})
 	}
