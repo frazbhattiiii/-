@@ -19,7 +19,7 @@ export const data = [
 		text: 'Contact',
 	},
 	{
-		to: '/signin',
+		to: '/admEmp',
 		text: 'Adm/Emp',
 	}
 ];

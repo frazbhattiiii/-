@@ -4,7 +4,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import SponsorPage from './pages/sponsorPage';
 import {useState} from 'react';
+
 //Pages
+import admEmp from './pages/admEmp';
 import Home from './pages/Home';
 import SignUp from './pages/SignupPage';
 import Register from './pages/registerPage';
@@ -21,7 +23,7 @@ import About from './pages/About';
 import EligibleForm from './pages/EligiblePage';
 import DonationFormPage from './pages/DonationForm';
 import CreditPage from './pages/CreditPage';
-
+import adminSignIn from './pages/adminSignIn';
 function App() {
 	 const [signedIn, setSignedIn] = useState(true);
 	return (
@@ -33,6 +35,8 @@ function App() {
 				<Route path="/navbar" exact component={Navbar} />
 				<Route path="/" exact component={Home} />
 				<Route path="/about" exact component={About} />
+				<Route path="/admin-signIn" exact component={adminSignIn} />
+				<Route path="/admEmp" exact component={admEmp} />
 				<Route path="/signin" exact component={SignUp} />
 				<Route path="/eligibility" exact component={EligibleForm} />
 				<Route path="/new-pricing" exact component={NewPricing} />
