@@ -14,10 +14,10 @@ const Hero = () => {
 				Giving even a date for the Sake of Allah more worthy then this world and everything which it contains
 				</HeroText>
 				<ButtonWrapper>
-					<Link to="signin">
+					<Link to="signup">
 						<Button>Donate</Button>
 					</Link>
-					<Link to ="signin">
+					<Link to ="signup">
 					<HeroButton>Receive</HeroButton>
 					</Link>
 				</ButtonWrapper>

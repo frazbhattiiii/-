@@ -29,7 +29,7 @@ function AllCategories() {
 
   const routeChange = () =>{ 
 	
-    let path = `/donation`; 
+    let path = `/signup`; 
     history.push(path);
   }
 	return (
@@ -71,7 +71,7 @@ function AllCategories() {
 									</PricingCardFeatures>
 								
                   			
-									<Button onClick={routeChange}>Donate
+									<Button onClick={routeChange}>Get Started
 								
 									</Button>
 											

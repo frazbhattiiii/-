@@ -7,7 +7,6 @@ export const heroOne = {
 	headline: "We are serving people for the last 5 years",
 	description: 'We came up with a new idea to help people in these hard times',
 	buttonLabel: 'Find More',
-	LinkTo: '/',
 	imgStart: 'start',
 	img: './assets/svg/charity1.png',
 	start: 'true',
@@ -23,7 +22,7 @@ export const heroTwo = {
 	description: 'He also said that Allah offers relief on the Day of Judgement for those who give sadaqa: “The believer have shade on the Day of Resurrection will be their charity,” (Hadith, Tirmidhi).',
 	buttonLabel: 'Donate',
 
-	LinkTo: '/',
+	linkTo: '/more',
 	imgStart: 'start',
 	img: './assets/svg/charity2.png',
 	start: 'true',
@@ -40,7 +39,7 @@ export const heroThree = {
 		'Our 5 year experience have allowed us to use the most innovative technologies and methodologies to help people to give them the happiness',
 	buttonLabel: 'Our Projects',
 
-	LinkTo: '/',
+	linkTo: '/register',
 	imgStart: '',
 	img: './assets/svg/charity3.png',
 	start: 'true',

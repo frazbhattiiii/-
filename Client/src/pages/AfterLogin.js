@@ -4,11 +4,9 @@ import { Content } from '../components/Content/Content';
 import Features from '../components/Features/Features';
 import NewHero from '../components/newHero/newHero';
 import NewNavbar from '../components/newNavbar/newNavbar';
-
 import { heroOne, heroTwo, heroThree } from '../data/HeroData';
 import { useHistory } from "react-router-dom";
 import Axios from 'axios'
-
 // Hero Feature Content Carousel
 
 const NewHome = () => {
