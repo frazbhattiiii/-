@@ -26,7 +26,7 @@ function Pricing() {
 
   const routeChange = () =>{ 
 	
-    let path = `/signup`; 
+    let path = `/signin`; 
     history.push(path);
   }
 	return (

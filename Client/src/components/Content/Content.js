@@ -30,7 +30,7 @@ export const Content = ({
 
   const routeChange = () =>{ 
 	
-    let path = `/signup`; 
+    let path = `/signin`; 
     history.push(path);
   }
 	

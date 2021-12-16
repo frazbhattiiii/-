@@ -13,15 +13,14 @@ import {
 } from './registerFormStyles';
 import { Container } from '../../globalStyles';
 import validateRegisterForm from './validateRegisterForm';
-import Axios from 'axios'
+
 
 const Form = () => {
-	const [firstName, setfirstName] = useState('');
-	const [lastName, setLastName] = useState('');
-	const [address, setAddress] = useState('');
-	const [city, setCity] = useState('');
-	const [phone_number, setphone_number] = useState('');
-	const [age, setAge] = useState('');
+	const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [city, setCity] = useState('');
+  const [portfolio, setPortfolio] = useState('');
+  const [age, setAge] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPass, setConfirmPass] = useState('');
@@ -30,47 +29,24 @@ const Form = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const resultError = validateRegisterForm({ firstName, lastName, email, password, confirmPass, address, city, phone_number, age });
+		const resultError = validateRegisterForm({ name, email, password, confirmPass ,address,city,portfolio,age});
 
 
 		if (resultError !== null) {
 			setError(resultError);
-			setSuccess(null)
 			return;
 		}
-		Axios.post("http://localhost:3001/api/insert/user",
-			{
-				first_name: firstName,
-				last_name: lastName,
-				password: password,
-				phone_number: phone_number,
-				city: city,
-				full_address: address,
-				email: email,
-				age: age
-			},
-		).then((response)=>{
-			console.log(response)
-			if(response.data==null){
-				setfirstName('');
-				setLastName('');
-				setEmail('');
-				setCity('');
-				setAge('');
-		
-				setphone_number('');
-				setPassword('');
-				setAddress('');
-				setConfirmPass('');
-				setError(null);
-				setSuccess('Application was submitted!');		
-			}
-			else{
-				setSuccess(null)
-				setError(response.data.sqlMessage)
-			}
-		})
-		
+		setName('');
+		setEmail('');
+    setCity('');
+    setAge('');
+
+    setPortfolio('');
+		setPassword('');
+    setAddress('');
+		setConfirmPass('');
+		setError(null);
+		setSuccess('Application was submitted!');
 	};
 
 	const messageVariants = {
@@ -79,14 +55,14 @@ const Form = () => {
 	};
 
 	const formData = [
-		{ label: 'First Name', value: firstName, onChange: (e) => setfirstName(e.target.value), type: 'text' },
-		{ label: 'Last Name', value: lastName, onChange: (e) => setLastName(e.target.value), type: 'text' },
-		{ label: 'Phone Number', value: phone_number, onChange: (e) => setphone_number(e.target.value), type: 'number' },
-		{ label: 'Address', value: address, onChange: (e) => setAddress(e.target.value), type: 'text' },
-		{ label: 'Age', value: age, onChange: (e) => setAge(e.target.value), type: 'number' },
-		{ label: 'City', value: city, onChange: (e) => setCity(e.target.value), type: 'text' },
+		{ label: 'Name', value: name, onChange: (e) => setName(e.target.value), type: 'text' },
+	
+    { label: 'Address', value: address, onChange: (e) => setAddress(e.target.value), type: 'text' },
+    { label: 'Age', value: age, onChange: (e) => setAge(e.target.value), type: 'number' },
+    { label: 'portfolio(Receiver or Donor)', value: portfolio, onChange: (e) => setPortfolio(e.target.value), type: 'text' },
+    { label: 'City', value: city, onChange: (e) => setCity(e.target.value), type: 'text' },
 		{ label: 'Email', value: email, onChange: (e) => setEmail(e.target.value), type: 'email' },
-
+    
 
 		{
 			label: 'Password',

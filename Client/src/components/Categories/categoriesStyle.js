@@ -105,6 +105,7 @@ export const PricingCard = styled.div`
 `;
 
 export const PricingCardInfo = styled.div`
+
 	background: #242424;
 	box-shadow: 0 6px 20px rgba(56, 125, 255, 0.2);
 	width: 280px;
@@ -117,6 +118,7 @@ export const PricingCardInfo = styled.div`
 	padding: 24px;
 	color: #fff;
 	margin: auto;
+	
 	> button {
 		margin-top: auto;
 
@@ -138,16 +140,21 @@ export const PricingCardInfo = styled.div`
 
 export const PricingCardPlan = styled.h3`
 	margin-bottom: 5px;
+	// marign-top:.5rem;
+	display:flex;
+	margin-top:.5rem;
 	font-size: 2rem;
 `;
 
 export const PricingCardCost = styled.h4`
+margin-top:.5rem;
 	font-size: 1.2rem;
 `;
 
 export const PricingCardText = styled.p`
 	font-size: 1.1rem;
 	margin: 0.4rem 0 1.3rem;
+	// margin-top:.5rem;
 	color: #a9b3c1;
 `;
 
@@ -155,6 +162,7 @@ export const PricingCardFeatures = styled.ul`
 	margin: 16px 0 32px;
 	list-style: none;
 	display: flex;
+	//margin-top:.5rem;
 	flex-direction: column;
 	color: #a9b3c1;
 `;
