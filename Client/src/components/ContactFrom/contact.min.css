@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+:root {
+  --light: #d0d1d3;
+  --dark: #040d14;
+  --green:  #ff471a;
+}
+
+body {
+  font-family: Poppins;
+  background: var(--dark);
+  line-height: 26px;
+  margin: 0;
+}
+#main-heading{
+  font-size: 5rem;
+  margin-top: 8rem;
+  margin-left: 30rem;
+  margin-bottom: 6rem;
+  display: flex;
+color: var(--green);
+}
+
+
+.App {
+  height: 75vh;
+  margin-top: 15vh;
+}
+
+#contact-form {
+  margin-top: 20px;
+ background-color: var(--dark);
+}
+
+.formRow {
+  
+  margin: 10px 0 20px 0;
+  margin-top: 2rem;
+}
+.form-control{
+  margin-top: 2rem;
+}
+.contactFormInput {
+  padding: 15px 10px;
+  /* margin-top: 2rem; */
+  margin-left: 30rem;
+  background-color: var(--dark);
+  display: flex;
+  width: 33rem;
+  height: 5rem;
+
+  box-shadow: 0 0 0 2px var(--green);
+  border-radius: .5rem;
+  border: none;
+  color: var(--green);
+}
+
+.contactformInput:focus {
+  background-color: var(--dark);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--green);
+  color: var(--light);
+}
+
+.contactformInput::placeholder {
+  color: var(--green);
+  opacity: 1;
+}
+
+.contactformInput:focus::placeholder {
+  color: var(--light);
+  opacity: 1;
+}
+
+.errorMessage {
+  color: #f45532;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+#notifyToast {
+  color: #fff;
+  border-radius: 6px;
+  width: 200px;
+  /* margin-left: 30rem; */
+  background-color: var(--green);
+}
+
+.contact-submit-btn {
+  background-color: var(--dark);
+  color: var(--green) !important;
+  padding: 15px 50px;
+  border: 2px solid var(--green);
+  border-radius: 10px;
+  margin-bottom: 25rem;
+  margin-left: 30rem;
+}
+
+.contact-submit-btn:hover {
+  background-color: var(--green);
+  color: var(--dark) !important;
+  border: 2px solid var(--green);
+}
+
+.contact-submit-btn:disabled:hover {
+  background-color: var(--dark);
+  color: var(--green) !important;
+  cursor: wait;
+}
+
+@media (max-width: 1200px) {
+  .submit-message {
+    width: 125px;
+    margin-left: 200px;
+  }
+  .contact-submit-btn{
+    margin-left: 18rem;
+  }
+  #main-heading{
+    margin-left: 18rem;
+    font-size: 5rem;
+    
+    
+    
+  }
+  .contactFormInput{
+    width: 30rem;
+    margin-left: 18rem;
+  }
+}
+@media (max-width: 768px) {
+  .submit-message {
+    width: 125px;
+    margin-left: 200px;
+  }
+  .contact-submit-btn{
+    margin-left: 14rem;
+  }
+  #main-heading{
+    margin-left: 14rem;
+    font-size: 4rem;
+    
+    
+    
+  }
+  .contactFormInput{
+    width: 25rem;
+    margin-left: 14rem;
+  }
+}
+@media (max-width: 1240px) {
+  .submit-message {
+    width: 125px;
+    margin-left: 200px;
+  }
+  .contact-submit-btn{
+    margin-left: 18rem;
+  }
+  #main-heading{
+    margin-left: 15rem;
+    font-size: 5rem;
+    
+    
+    
+  }
+  .contactFormInput{
+    width: 30rem;
+    margin-left: 18rem;
+  }
+}
+
+
+
+@media only screen and (max-width:1024px) {
+  .submit-message {
+    /* margin-bottom: 2rem; */
+    width: 125px;
+    margin-left: 2rem;
+  }
+  .contact-submit-btn{
+    margin-left: 11rem;
+  }
+  #main-heading{
+    margin-top: 7rem;
+    margin-bottom: 1rem;
+    margin-left: 11rem;
+    font-size: 3rem;
+    
+    
+    
+  }
+  .contactFormInput{
+    width: 22rem;
+    margin-left: 11rem;
+  }
+}
+@media (max-width:480px) {
+  .submit-message {
+    /* margin-bottom: 2rem; */
+    width: 125px;
+    margin-left: 2rem;
+  }
+  .contact-submit-btn{
+    margin-left: 11rem;
+  }
+  #main-heading{
+    margin-top: 7rem;
+    margin-bottom: 1rem;
+    margin-left: 10rem;
+    font-size: 2rem;
+    
+    
+    
+  }
+  .contactFormInput{
+    width: 12rem;
+    margin-left: 11rem;
+  }
+}
+@media (max-width:360px) {
+  .submit-message {
+    /* margin-bottom: 2rem; */
+    width: 125px;
+    margin-left: 2rem;
+  }
+  .contact-submit-btn{
+    margin-left: 8rem;
+  }
+  #main-heading{
+    margin-top: 7rem;
+    margin-bottom: 1rem;
+    margin-left: 7rem;
+    font-size: 2rem;
+    
+    
+    
+  }
+  .contactFormInput{
+    width: 12rem;
+    margin-left: 8rem;
+  }
+}
+@media (max-width:540px) {
+  .submit-message {
+    /* margin-bottom: 2rem; */
+    width: 125px;
+    margin-left: 2rem;
+  }
+  .contact-submit-btn{
+    margin-left: 9rem;
+  }
+  #main-heading{
+    margin-top: 7rem;
+    margin-bottom: 1rem;
+    margin-left: 8rem;
+    font-size: 2rem;
+    
+    
+    
+  }
+  .contactFormInput{
+    width: 14rem;
+    margin-left: 9rem;
+  }
+}
