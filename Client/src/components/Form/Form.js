@@ -84,24 +84,10 @@ const Form = () => {
 		
   }
 	const check= () =>{
-		signupData.map((data,index)=>
-		{console.log(email,password);
-			if (data.email===email && data.password===password) {
-				console.log(true);
-				alert("Successfully Logged In ");
-				//setloggedIn(true);
-				routeChange();
-				
-				
-			}
+	
 
 
-			else {
-				setError('Please Enter valid email or password');
-				return
-
-			}
-		})
+	
 	}
 
 

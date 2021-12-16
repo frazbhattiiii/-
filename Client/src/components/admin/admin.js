@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { usersData } from '../../data/usersData';
 import { Button, Heading, TextWrapper } from '../../globalStyles';
@@ -26,13 +26,24 @@ import { useHistory } from "react-router-dom";
 
 
 function AdminInterface() {
+  
 	const history = useHistory();
+  
 
+const [buttonText, setButtonText] = useState("On Hold"); 
   const routeChange = () =>{ 
 	
     let path = `/create-Employee`; 
     history.push(path);
   }
+  const changeText = (text,salary) => {
+    
+    setButtonText(text)
+  
+  
+  }
+
+
 	return (
     <div >
 		<IconContext.Provider value={{ color: '#a9b3c1', size: '1rem' }}>
@@ -64,12 +75,15 @@ function AdminInterface() {
 									<PricingCardText>{card.Email}</PricingCardText>
                   <PricingCardText>{card.Salary}</PricingCardText>
                   <PricingCardText>{card.siblings}</PricingCardText>
+                  <PricingCardText>{card.Childrens}</PricingCardText>
                   <PricingCardText>{card.Company}</PricingCardText>
 									
 								
                   			
-									<Button >
-                      Delivered
+									<Button onClick={() => changeText("Deserving",card.Salary)}>
+                     {buttonText} 
+                
+                   
 									</Button>
 											
 								

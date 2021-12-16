@@ -7,7 +7,7 @@ import NewNavbar from '../components/newNavbar/newNavbar';
 
 import { heroOne, heroTwo, heroThree } from '../data/HeroData';
 import { useHistory } from "react-router-dom";
-import Axios from 'axios'
+
 
 // Hero Feature Content Carousel
 
@@ -20,15 +20,7 @@ const NewHome = () => {
 		history.push(path);
 
 	}
-	useEffect(() => {
-		Axios.post("http://localhost:3001/api/currentUser")
-			.then((response) => {
-				if (response.data === "") {
-					console.log(response.data)
-					routeChange()
-				}
-			})
-	})
+	
 	return (
 		<>
 			<NewNavbar />
