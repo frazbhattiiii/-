@@ -50,8 +50,8 @@ const Form = () => {
 				age: age
 			},
 		).then((response)=>{
-			console.log(response)
-			if(response.data==null){
+			
+			if(response.data==""){
 				setfirstName('');
 				setLastName('');
 				setEmail('');
