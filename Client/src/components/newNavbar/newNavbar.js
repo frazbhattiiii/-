@@ -14,7 +14,7 @@ import {
 } from './newNavbarStyles.js';
 import { useLocation, useHistory } from 'react-router-dom';
 import { data } from '../../data/newNavbarData';
-import { Button } from '../../globalStyles.js';
+import Axios from 'axios'
 
 const NewNavbar = () => {
 
@@ -37,6 +37,10 @@ const NewNavbar = () => {
 	};
 
 	const closeMobileMenu = (to, id) => {
+		if(id==='signOut'){
+			Axios.post("http://localhost:3001/api/signOut/currentUser")
+			.then()
+		}
 		if (id && location.pathname === '/') {
 			scrollTo(id);
 		}
