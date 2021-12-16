@@ -1,10 +1,8 @@
 import React from 'react'
-import DonationForm from '../components/donationForm/donationForm';
-import NewNavbar from '../components/newNavbar/newNavbar';
+import DonationForm from '../components/donationForm/donationForm'
 function DonationFormPage() {
   return (
     <div>
-      <NewNavbar/>
       <DonationForm />
     </div>
   )

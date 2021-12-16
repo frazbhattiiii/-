@@ -21,7 +21,6 @@ export const Content = ({
 	headline,
 	description,
 	buttonLabel,
-	LinkTo,
 	img,
 	alt,
 	inverse,
@@ -31,7 +30,7 @@ export const Content = ({
 
   const routeChange = () =>{ 
 	
-    let path = LinkTo; 
+    let path = `/signup`; 
     history.push(path);
   }
 	

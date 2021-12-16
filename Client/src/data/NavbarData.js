@@ -15,11 +15,7 @@ export const data = [
 	
 	},
 	{
-		to: '/signin',
+		to: '/signup',
 		text: 'Contact',
 	},
-	{
-		to: '/admEmp',
-		text: 'Adm/Emp',
-	}
 ];
