@@ -1,9 +1,8 @@
-export default function validateDonationForm({ size, number, address, city, checkedValue_,description }) {
+export default function validateDonationForm({ size, number, address, city, checkeditem,description }) {
 	if (!size.trim()) {
 		return 'Size required';
 	}
-	else if (size.trim() !== 's' && size.trim() !== 'l' && size.trim() !== 'xl' && size.trim() !== 'xxl' && size.trim() !== 'xxxl') {
-		console.log(size)
+	else if (size !== "s" && size !== "l" && size !== "xl" && size !== "xxl" && size !== "xxxl") {
 		return 'Invalid Size! Enter("s","l","xl","xxl","xxxl")';
 	}
 	if (!number.trim()) {
@@ -21,7 +20,7 @@ export default function validateDonationForm({ size, number, address, city, chec
 	if (!city.trim()) {
 		return 'City required';
 	}
-	if (checkedValue_ === 0) {
+	if (checkeditem === 0) {
 		return "Please Select Category"
 	}
 	if(!description.trim()){

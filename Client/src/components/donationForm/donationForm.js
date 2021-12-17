@@ -16,6 +16,8 @@ import {
 import { Container } from "../../globalStyles";
 import { useHistory } from "react-router-dom";
 import validateDonationForm from "./donationFormValidation";
+import Axios from 'axios'
+
 const DonationForm = () => {
 
   const [size, setSize] = useState("");
@@ -58,21 +60,32 @@ const DonationForm = () => {
       setError(resultError);
       return;
     }
+    Axios.post("http://localhost:3001/api/insert/give",
+    {
+      category:checkeditem,
+      description:description,
+      size:size,
+      num_pieces:number
+    }).then((response)=>{
+      if(response.data ===""){
+        alert('Your Request is processed. Our Employee will contact within 48hrs')
 
-
-    alert('Your Request is processed. Our Employee will contact within 48hrs')
-
-    setSize("");
-    setNumber("");
-    setCity("");
-
-
-    setAddress("");
-
-    setDescription("");
-
-    setError(null);
-    routeChange();
+        setSize("");
+        setNumber("");
+        setCity("");
+    
+    
+        setAddress("");
+    
+        setDescription("");
+    
+        setError(null);
+        routeChange();
+      }else{
+        setError(response.data.sqlMessage)
+        return
+      }
+    })
 
   };
 

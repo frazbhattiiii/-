@@ -15,7 +15,8 @@ app.use(bodyParser.urlencoded({extended:true}))
 
 const user = {
     email: "",
-    password:""
+    password:"",
+    user_id:-1
 }
 
 //Register Form
@@ -36,17 +37,33 @@ app.post("/api/insert/user",(req,res)=>{
         res.send(err);
     })    
 })
+app.post("/api/insert/give",(req,res)=>{
+    const category = req.body.category
+    const description = req.body.description
+    const size = req.body.size
+    const num_pieces = req.body.num_pieces
+    const sqlInsertDonation = "insert into give (user_id,category,description,size,num_pieces)" +
+    "value (?,?,?,?,?)"
+    console.log(user.user_id)
+    db.query(sqlInsertDonation,[user.user_id,category,description,size,num_pieces],(err,result)=>{
+        res.send(err)
+    })
+    
+
+})
+
 
 //SignIn form
 app.post("/api/signIn/user",(req,res)=>{
     const email = req.body.email
     const password = req.body.password
-    const sqlSelect = "select email, password from user where"+
+    const sqlSelect = "select email, password, user_id from user where"+
                       " email = ? and password = ?"
     db.query(sqlSelect,[email,password],(err,result)=>{
         if(result.length===1){
             user.email = result[0].email
             user.password = result[0].password
+            user.user_id = result[0].user_id
         }
         res.send(result)
     })                  
@@ -54,12 +71,13 @@ app.post("/api/signIn/user",(req,res)=>{
 })
 
 app.post("/api/currentUser",(req,res)=>{
-    console.log("Current user -> " + user.email + " " + user.password)
+    console.log("Current user -> " + user.email + " " + user.password + " " + user.user_id)
     res.send(user.email)
 })
 app.post("/api/signOut/currentUser",(req,res)=>{
     user.email = ""
     user.password = ""
+    user.user_id = -1
     console.log("Current user -> " + user.email + " " + user.password)
     res.send(true)
 })
