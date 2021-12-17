@@ -17,7 +17,7 @@ const NewHero = () => {
 					<Link to="donate">
 						<Button>Donate</Button>
 					</Link>
-					<Link to ="donate">
+					<Link to ="eligibility">
 					<HeroButton>Receive</HeroButton>
 					</Link>
 				</ButtonWrapper>

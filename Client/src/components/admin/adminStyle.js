@@ -25,7 +25,7 @@ export const PriceImageWrapper = styled(motion.div)`
 	justify-content: center;
 	position: relative;
 `;
-export const priceButton = styled.button`
+export const employeeButton = styled.button`
 	border-radius: 4px;
 	background: none;
 	white-space: nowrap;
@@ -61,6 +61,8 @@ export const priceButton = styled.button`
 		color: white;
 	}
 `;
+
+
 
 export const PricingWrapper = styled.div`
 	display: flex;

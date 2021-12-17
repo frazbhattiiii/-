@@ -1,4 +1,4 @@
-export default function validateForm({ email, password }) {
+export default function adminValidate({email, password}) {
 
 	// else if (!/^[A-Za-z]+/.test(name.trim())) {
 	//   errors.name = 'Enter a valid name';
@@ -13,6 +13,8 @@ export default function validateForm({ email, password }) {
 	}
 	if (!password) {
 		return 'Password is required';
+	} else if (password.length < 6) {
+		return 'Password needs to be 6 characters or more';
 	}
 
 

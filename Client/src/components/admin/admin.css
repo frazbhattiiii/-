@@ -1,0 +1,15 @@
+.btnContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10rem;
+  margin-bottom: 25rem;
+}
+.textHeading{
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6rem;
+  margin-bottom: 7rem;
+}
