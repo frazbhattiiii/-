@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 
 import {
   FormColumn,
@@ -16,76 +16,100 @@ import {
 import { Container } from "../../globalStyles";
 import {useHistory} from  "react-router-dom";
 import adminValidate from "./adminValidate";
-const AdminForm = () => {
+import Axios from "axios";
 
-  const [isChecked, setIsChecked] = useState(false);
+const AdminForm = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
- 
-
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
- 
+  const [checkeditem, setCheckedItem] = useState(0)
+  const checkBoxData = [
+    { value: "1", category: "Employee" },
+    { value: "2", category: "Admin" },
+  ];
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    const checkBox = e.target.value;
-    
     const resultError = adminValidate({
-          email,
-        password
+      email,
+      password
     });
+    
 
     if (resultError !== null) {
       setError(resultError);
       return;
     }
+    console.log(checkeditem)
+    console.log(checkeditem === 2)
+    if(checkeditem===2){//Why is it Hppening
+      console.log("Current user -> " + email + " " + password)
+      Axios.post("http://localhost:3001/api/signIn/admin",
+      {
+        email:email,
+        password:password
+      }).then((response)=>{
+        if(response.data.length===1){
+          setEmail('');
+          setPassword('');
+          //setloggedIn(true);
+          routeChange();
+  
+        }
+        else {
+          setError('Please Enter valid email or password');
+          return
+        }
+      })
+    }
+    else{
+      Axios.post("http://localhost:3001/api/signIn/employee",
+      {
+        email:email,
+        password:password
+      }).then((response)=>{
+        if(response.data.length===1){
+          setEmail('');
+          setPassword('');
+          //setloggedIn(true);
+          routeChange();//Change this method
+  
+        }
+        else {
+          setError('Please Enter valid email or password');
+          return
+        }
+      })
+    }
     
-
-    
-      alert('Successfully Logged In!')
-
-      
-        
-          
-      
-      
-    
-    
-    console.log(checkBox);
-    
-    setEmail("");
-    setPassword("");
-   
-    setError(null);
-    setSuccess("Successfully donated!");
-    routeChange();
 
   };
 
   const messageVariants = {
-    hidden: { y: 30, opasiblings: 0 },
-    animate: { y: 0, opasiblings: 1, transition: { delay: 0.2, duration: 0.4 } },
+    hidden: { y: 30, opacity: 0 },
+    animate: { y: 0, opacity: 1, transition: { delay: 0.2, duration: 0.4 } },
   };
 
-  
 
-  
-  const eligibilityformData = [
+
+
+  const formData = [
     {
       label: "Your Email",
       value: email,
       onChange: (e) => setEmail(e.target.value),
       type: "email",
-    },   
+    },
+    ,
     {
       label: "Your Password",
       value: password,
       onChange: (e) => setPassword(e.target.value),
       type: "password",
-    }
+    },
   ];
   const history = useHistory();
   const routeChange = () =>{ 
@@ -95,60 +119,54 @@ const AdminForm = () => {
     
 		
   }
-  const handleOnChange = (e) => {
-    setIsChecked(!isChecked);
-    const checked = e.target.checked;
-    
-    // to get the checked value
-
-    let checkedArray=[]
-    const checkedValue = e.target.value;
-    console.log(checkedValue)
-    checkedArray.push(checkedValue)
-    console.log(checkedArray)
-        // to get the checked name
-    const checkedName = e.target.name;
-  }
-
-
+  const handleOnChange = (e) => {    
+      setCheckedItem(e.target.value)      
+  };
   
   return (
     <FormSection>
       <Container>
         <FormRow>
           <FormColumn small>
-            <FormTitle>Sign In
-            </FormTitle>
+            <FormTitle>Sign In</FormTitle>
             <FormWrapper onSubmit={handleSubmit}>
-              
-                
+
+
 
               <CheckBox>
-                <h3>Select one of these</h3>
+                <h3>Select your Category</h3>
                 <div id="checklist" >
-                  <input id="car" type="checkbox" size="r" value="employee"  ></input>
-                  <label for="car">Employee</label>
-                  <input id="bike" type="checkbox" size="r" value="admin" ></input>
-                  <label for="bike">Admin</label>
-                  
-                  
+                  {checkBoxData.map(item=> {
+                    return checkeditem === item.value ?
+                      (
+                        <>
+                        <input key = {item.value} onClick={handleOnChange} id={item.value} type="checkbox" size="r" value={item.value} checked ></input>
+                        <label key = {item.value+"b"} for={item.value}>{item.category}</label>
+                        </>
+                      ) : (
+                        <>
+                        <input key = {item.value} onClick={handleOnChange} id={item.value} type="checkbox" size="r" value={item.value}  ></input>
+                        <label key = {item.value+"a"} for={item.value}>{item.category}</label>
+                        </>
+                      )
+                  })}
                 </div>
               </CheckBox>
-              
-              {eligibilityformData.map((el, index) => (
-                <FormInputRow key={index} >
+
+              {formData.map((el, index) => (
+                <FormInputRow key={index}>
                   <FormLabel>{el.label}</FormLabel>
                   <FormInput
                     type={el.type}
                     placeholder={`Enter ${el.label.toLocaleLowerCase()}`}
                     value={el.value}
                     onChange={el.onChange}
-                    
+
                   />
                 </FormInputRow>
               ))}
 
-              <FormButton type="submit" onClick={handleOnChange}>Sign In</FormButton>
+              <FormButton type="submit" >Sign In</FormButton>
             </FormWrapper>
 
             {error && (
@@ -158,17 +176,8 @@ const AdminForm = () => {
                 animate="animate"
                 error
               >
-                
+
                 {error}
-              </FormMessage>
-            )}
-            {success && (
-              <FormMessage
-                variants={messageVariants}
-                initial="hidden"
-                animate="animate"
-              >
-                {success}
               </FormMessage>
             )}
           </FormColumn>
@@ -177,4 +186,5 @@ const AdminForm = () => {
     </FormSection>
   );
 };
+
 export default AdminForm;

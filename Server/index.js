@@ -5,23 +5,23 @@ const app = express()
 const mysql = require("mysql2")
 const db = mysql.createPool({
     host: 'localhost',
-    user:  'root',
-    password:'Moez@123',
-    database:'libas_e_kheriah',
+    user: 'root',
+    password: 'Moez@123',
+    database: 'libas_e_kheriah',
 })
 app.use(cors())
 app.use(express.json())
-app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 const user = {
     email: "",
-    password:"",
-    user_id:-1
+    password: "",
+    user_id: -1
 }
 
 //Register Form
-app.post("/api/insert/user",(req,res)=>{
-    
+app.post("/api/insert/user", (req, res) => {
+
     const first_name = req.body.first_name
     const last_name = req.body.last_name
     const password = req.body.password
@@ -32,49 +32,79 @@ app.post("/api/insert/user",(req,res)=>{
     const age = req.body.age
 
     const sqlInsert = "insert into user (first_name,last_name,password,phone_number,city,full_address,email,age)" +
-                      "value (?,?,?,?,?,?,?,?)"
-    db.query(sqlInsert,[first_name,last_name,password,phone_number,city,full_address,email,age],(err,result)=>{
+        "value (?,?,?,?,?,?,?,?)"
+    db.query(sqlInsert, [first_name, last_name, password, phone_number, city, full_address, email, age], (err, result) => {
         res.send(err);
-    })    
+    })
 })
-app.post("/api/insert/give",(req,res)=>{
+app.post("/api/insert/give", (req, res) => {
     const category = req.body.category
     const description = req.body.description
     const size = req.body.size
     const num_pieces = req.body.num_pieces
     const sqlInsertDonation = "insert into give (user_id,category,description,size,num_pieces)" +
-    "value (?,?,?,?,?)"
+        "value (?,?,?,?,?)"
     console.log(user.user_id)
-    db.query(sqlInsertDonation,[user.user_id,category,description,size,num_pieces],(err,result)=>{
+    db.query(sqlInsertDonation, [user.user_id, category, description, size, num_pieces], (err, result) => {
         res.send(err)
     })
-    
 
+
+})
+app.post("/api/signIn/admin", (req, res) => {
+    const email = req.body.email
+    const password = req.body.password
+    const sqlSelect = "select email, password, admin_id from admin where" +
+        " email = ? and password = ?"
+    db.query(sqlSelect, [email, password], (err, result) => {
+        if (result.length === 1) {
+            user.email = result[0].email
+            user.password = result[0].password
+            user.user_id = result[0].user_id
+        }
+        console.log("Current user -> " + user.email + " " + user.password)
+        res.send(result)
+    })
+})
+app.post("/api/signIn/employee", (req, res) => {
+    const email = req.body.email
+    const password = req.body.password
+    const sqlSelect = "select email, password, emp_id from employee where" +
+        " email = ? and password = ?"
+    db.query(sqlSelect, [email, password], (err, result) => {
+        if (result.length === 1) {
+            user.email = result[0].email
+            user.password = result[0].password
+            user.user_id = result[0].user_id
+        }
+        console.log("Current usere -> " + user.email + " " + user.password)
+        res.send(result)
+    })
 })
 
 
 //SignIn form
-app.post("/api/signIn/user",(req,res)=>{
+app.post("/api/signIn/user", (req, res) => {
     const email = req.body.email
     const password = req.body.password
-    const sqlSelect = "select email, password, user_id from user where"+
-                      " email = ? and password = ?"
-    db.query(sqlSelect,[email,password],(err,result)=>{
-        if(result.length===1){
+    const sqlSelect = "select email, password, user_id from user where" +
+        " email = ? and password = ?"
+    db.query(sqlSelect, [email, password], (err, result) => {
+        if (result.length === 1) {
             user.email = result[0].email
             user.password = result[0].password
             user.user_id = result[0].user_id
         }
         res.send(result)
-    })                  
+    })
 
 })
 
-app.post("/api/currentUser",(req,res)=>{
+app.post("/api/currentUser", (req, res) => {
     console.log("Current user -> " + user.email + " " + user.password + " " + user.user_id)
     res.send(user.email)
 })
-app.post("/api/signOut/currentUser",(req,res)=>{
+app.post("/api/signOut/currentUser", (req, res) => {
     user.email = ""
     user.password = ""
     user.user_id = -1
@@ -82,10 +112,10 @@ app.post("/api/signOut/currentUser",(req,res)=>{
     res.send(true)
 })
 
-app.get("/",(req,res)=>{
-    res.send("Hello World")    
+app.get("/", (req, res) => {
+    res.send("Hello World")
 })
 
-app.listen(3001, ()=>{
+app.listen(3001, () => {
     console.log('Running on port 3001')
 })
