@@ -90,7 +90,7 @@ const AdminForm = () => {
   const history = useHistory();
   const routeChange = () =>{ 
 	
-    let path = `/admin`; 
+    let path = `/employee`; 
     history.push(path);
     
 		
