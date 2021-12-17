@@ -15,10 +15,10 @@ import {
 	PricingCardFeature,
 	PricingCard,
 	priceButton,
-  PriceImageWrapper,
-  PriceImage
+	PriceImageWrapper,
+	PriceImage
 } from './categoriesStyle';
-import {categoriesData} from '../../data/categoriesData';
+import { categoriesData } from '../../data/categoriesData';
 
 import { useHistory } from "react-router-dom";
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
@@ -27,11 +27,11 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 function AllCategories() {
 	const history = useHistory();
 
-  const routeChange = () =>{ 
-	
-    let path = `/donation`; 
-    history.push(path);
-  }
+	const routeChange = () => {
+
+		let path = `/donation`;
+		history.push(path);
+	}
 	return (
 		<IconContext.Provider value={{ color: '#a9b3c1', size: '1rem' }}>
 			<PricingSection id="pricing">
@@ -45,20 +45,20 @@ function AllCategories() {
 						color="white"
 						align="center"
 					>
-						 
+
 					</TextWrapper>
 					<PricingContainer>
-          
+
 						{categoriesData.map((card, index) => (
 							<PricingCard key={index}>
 								<PricingCardInfo>
-                <PriceImageWrapper>
-						  	<PriceImage
-								src={card.image}
-						
-					
-						  	/>			
-              </PriceImageWrapper>
+									<PriceImageWrapper>
+										<PriceImage
+											src={card.image}
+
+
+										/>
+									</PriceImageWrapper>
 									<PricingCardPlan>{card.title}</PricingCardPlan>
 									<PricingCardCost>{card.price}</PricingCardCost>
 									<PricingCardText>{card.description}</PricingCardText>
@@ -69,13 +69,13 @@ function AllCategories() {
 											</PricingCardFeature>
 										))}
 									</PricingCardFeatures>
-								
-                  			
+
+
 									<Button onClick={routeChange}>Donate
-								
+
 									</Button>
-											
-								
+
+
 
 								</PricingCardInfo>
 							</PricingCard>

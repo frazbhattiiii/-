@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 
 import {
   FormColumn,
@@ -14,11 +14,11 @@ import {
   CheckBox,
 } from "./donationFormStyle";
 import { Container } from "../../globalStyles";
-import {useHistory} from  "react-router-dom";
+import { useHistory } from "react-router-dom";
 import validateRegisterForm from "./donationFormValidation";
 import validateDonationForm from "./donationFormValidation";
 const DonationForm = () => {
-  
+
   const [isChecked, setIsChecked] = useState(false);
   const [able, setAble] = useState(true);
   const [size, setSize] = useState("");
@@ -31,26 +31,26 @@ const DonationForm = () => {
 
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
-  const checkBoxData=[
-    {value:"01"},
-    {value:"02"},
-    {value:"03"},
-  {value:"04"}
-  ,{value:"05"}
-  ,{value:"06"}
-  ,{value:"07"}
-  ,{value:"08"}
-  ,{value:"09"}
-  ,{value:"10"}
-  ,{value:"11"},
-  {value:"12"},
-];
+  const checkBoxData = [
+    { value: "01" },
+    { value: "02" },
+    { value: "03" },
+    { value: "04" }
+    , { value: "05" }
+    , { value: "06" }
+    , { value: "07" }
+    , { value: "08" }
+    , { value: "09" }
+    , { value: "10" }
+    , { value: "11" },
+    { value: "12" },
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     const checkBox = e.target.value;
-    
+
     const resultError = validateDonationForm({
       size,
       number,
@@ -63,30 +63,30 @@ const DonationForm = () => {
       return;
     }
 
-    
-      alert('Your Request is processed. Our Employee will contact within 48hrs')
 
-      
-        
-          
-      
-      
-    
-    
+    alert('Your Request is processed. Our Employee will contact within 48hrs')
+
+
+
+
+
+
+
+
     console.log(checkBox);
-    
+
     setSize("");
     setNumber("");
     setCity("");
 
 
     setAddress("");
- 
+
     setDescription("");
-  
+
     setError(null);
     setSuccess("Successfully donated!");
-      routeChange();
+    routeChange();
 
   };
 
@@ -95,9 +95,9 @@ const DonationForm = () => {
     animate: { y: 0, opacity: 1, transition: { delay: 0.2, duration: 0.4 } },
   };
 
-  
 
-  
+
+
   const DonationformData = [
     {
       label: "size of piece",
@@ -132,46 +132,46 @@ const DonationForm = () => {
     }
   ];
   const history = useHistory();
-  const routeChange = () =>{ 
-	
-    let path = `/sponsor`; 
+  const routeChange = () => {
+
+    let path = `/sponsor`;
     history.push(path);
-    
-		
+
+
   }
   const handleOnChange = (e) => {
     setIsChecked(!isChecked);
     const checked = e.target.checked;
-    
+
     // to get the checked value
     const checkedValue = e.target.value;
-   
-        // to get the checked name
+
+    // to get the checked name
     const checkedName = e.target.name;
-    checkBoxData.map((value=>{
-      
-      if(checked==value.value){
+    checkBoxData.map((value => {
+
+      if (checked == value.value) {
         console.log(checkedValue);
-      
+
       }
-     }))
-    if(checkedValue=="own"){
+    }))
+    if (checkedValue == "own") {
       setError("Please fill out the description box!");
       setAble(false);
-      if(setDescription==""){
+      if (setDescription == "") {
         setError("Fill the description to proceed");
       }
-    
+
     }
-    
+
 
   };
-  const BoxCheck=()=>{
-    
+  const BoxCheck = () => {
+
     console.log(description);
-   
-    
-    if(description!=""){
+
+
+    if (description != "") {
       setAble(true);
     }
   }
@@ -182,8 +182,8 @@ const DonationForm = () => {
           <FormColumn small>
             <FormTitle>Donate</FormTitle>
             <FormWrapper onSubmit={handleSubmit}>
-              
-                
+
+
 
               <CheckBox>
                 <h3>Select your Category</h3>
@@ -216,7 +216,7 @@ const DonationForm = () => {
                   <label for="own">Your Own Category</label>
                 </div>
               </CheckBox>
-              
+
               {DonationformData.map((el, index) => (
                 <FormInputRow key={index} onClick={BoxCheck}>
                   <FormLabel>{el.label}</FormLabel>
@@ -225,7 +225,7 @@ const DonationForm = () => {
                     placeholder={`Enter ${el.label.toLocaleLowerCase()}`}
                     value={el.value}
                     onChange={el.onChange}
-                    
+
                   />
                 </FormInputRow>
               ))}
@@ -240,7 +240,7 @@ const DonationForm = () => {
                 animate="animate"
                 error
               >
-                
+
                 {error}
               </FormMessage>
             )}
