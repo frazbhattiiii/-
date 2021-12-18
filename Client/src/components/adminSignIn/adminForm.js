@@ -31,11 +31,13 @@ const AdminForm = () => {
 
 
   const handleSubmit = (e) => {
+    console.log(checkeditem)
     e.preventDefault();
     
     const resultError = adminValidate({
       email,
-      password
+      password,
+      checkeditem,
     });
     
 
@@ -43,10 +45,7 @@ const AdminForm = () => {
       setError(resultError);
       return;
     }
-    console.log(checkeditem)
-    console.log(checkeditem === 2)
-    if(checkeditem!==2){//Why is it Hppening
-      console.log("Current user -> " + email + " " + password)
+    if(checkeditem==2){
       Axios.post("http://localhost:3001/api/signIn/admin",
       {
         email:email,

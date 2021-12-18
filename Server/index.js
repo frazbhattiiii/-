@@ -16,7 +16,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 const user = {
     email: "",
     password: "",
-    user_id: -1
+    user_id: -1,
+    accountType: ""
 }
 
 //Register Form
@@ -77,8 +78,9 @@ app.post("/api/signIn/admin", (req, res) => {
             user.email = result[0].email
             user.password = result[0].password
             user.user_id = result[0].user_id
+            user.accountType = "admin"
         }
-        console.log("Current user -> " + user.email + " " + user.password)
+        console.log("Current user -> " + user.email + " " + user.password + " " + user.accountType)
         res.send(result)
     })
 })
@@ -93,6 +95,7 @@ app.post("/api/signIn/employee", (req, res) => {
             user.email = result[0].email
             user.password = result[0].password
             user.user_id = result[0].user_id
+            user.accountType = "employee"
         }
         console.log("Current user -> " + user.email + " " + user.password)
         res.send(result)
@@ -111,6 +114,7 @@ app.post("/api/signIn/user", (req, res) => {
             user.email = result[0].email
             user.password = result[0].password
             user.user_id = result[0].user_id
+            user.accountType = "user"
         }
         res.send(result)
     })
@@ -135,19 +139,28 @@ app.post("/api/insert/userEligibity",(req,res)=>{
 })
 
 app.post("/api/currentUser", (req, res) => {
-    console.log("Current user -> " + user.email + " " + user.password + " " + user.user_id)
-    res.send(user.email)
+    const info = []
+    info[0] = user.email
+    info[1] = user.accountType
+    console.log(info)
+    res.send(info)
 })
 app.post("/api/signOut/currentUser", (req, res) => {
     user.email = ""
     user.password = ""
-    user.user_id = -1
+    user.user_id = -1,
+    user.accountType = "",
     console.log("Current user -> " + user.email + " " + user.password)
     res.send(true)
 })
 
 
-
+app.post("/api/check/is_eligible/user",(req,res)=>{
+    const sqlSelect = "Select is_eligible from user where email = ? and salary"
+    db.query(sqlSelect,[user.email],(err,result)=>{
+        res.send(result)
+    })
+})
 
 app.post("/api/fetch/elligibleUsersCandidates",(req,res)=>{
     const sqlSelect = "Select concat(first_name,' ',last_name),phone_number,"+

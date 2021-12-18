@@ -1,9 +1,7 @@
 import React from 'react';
 import GlobalStyle from './globalStyles';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Navbar from './components/Navbar/Navbar';
 import SponsorPage from './pages/sponsorPage';
-import { useState } from 'react';
 //Pages
 import admEmp from './pages/admEmp';
 import Home from './pages/Home';
@@ -13,7 +11,6 @@ import Pricing from './pages/PricingPage';
 import Footer from './components/Footer/Footer';
 import Donate from './pages/Donate';
 import NewPricing from './components/newPricing/newPricing';
-import NewNavbar from './components/newNavbar/newNavbar';
 import ReceiveFormPage from './pages/ReceivePage';
 import NewHome from './pages/AfterLogin';
 import Contact from './pages/Contact';
@@ -26,14 +23,12 @@ import CreditPage from './pages/CreditPage';
 import adminSignIn from './pages/adminSignIn';
 import EmployeeCreationPage from './pages/employeeCreationPage';
 function App() {
-	const [signedIn, setSignedIn] = useState(true);
 	return (
 		<Router>
 			<GlobalStyle />
 
 			<Switch>
 
-				<Route path="/navbar" exact component={Navbar} />
 				<Route path="/" exact component={Home} />
 				<Route path="/about" exact component={About} />
 				<Route path="/admin-signIn" exact component={adminSignIn} />

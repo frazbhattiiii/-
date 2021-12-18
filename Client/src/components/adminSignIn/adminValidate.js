@@ -1,4 +1,4 @@
-export default function adminValidate({email, password}) {
+export default function adminValidate({email, password, checkeditem}) {
 
 	// else if (!/^[A-Za-z]+/.test(name.trim())) {
 	//   errors.name = 'Enter a valid name';
@@ -14,6 +14,9 @@ export default function adminValidate({email, password}) {
 	if (!password) {
 		return 'Password is required';
 	} 
+	if(checkeditem!=1&&checkeditem!=2){
+		return "Please select category"
+	}
 
 
 	return null;
