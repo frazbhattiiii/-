@@ -1,36 +1,43 @@
-export default function validateReceiveForm({ name,address,email,size,demand,description}) {
-	if (!name.trim()) {
-		return 'Username required';
+export default function validateRecieveForm({ size, number, address, city, checkeditem,description }) {
+	if (!size.trim()) {
+		return 'Size required';
 	}
-  if(!address.trim()){
-    return 'Address Required';
-  }
-	if(!size.trim()){
-    return 'Kindly Enter the size of Item';
-  }
+	else if (size !== "s" && size !== "l" && size !== "xl" && size !== "xxl" && size !== "xxxl") {
+		return 'Invalid Size! Enter("s","l","xl","xxl","xxxl")';
+	}
+	if (!number.trim()) {
+		return 'Please Enter the number of pieces';
+	}
+	if (number > 200) {
+		return 'You can donate maximum upto 200 pieces!';
+	}
+	else if (number < 0) {
+		return 'Enter some valid number!!';
+	}
+	if (!address.trim()) {
+		return 'Address Required';
+	}
+	if (!city.trim()) {
+		return 'City required';
+	}
+	if (checkeditem === 0) {
+		return "Please Select Category"
+	}
 	if(!description.trim()){
-    return 'Please Enter the description of your receiving';
-  }
-	if(!demand.trim()){
-    return 'Kindly Enter the demand of the item required';
-  }
+		return "Description Required"
+	}
 
- 
-  
-	// else if (!/^[A-Za-z]+/.test(name.trim())) {
-	//   errors.name = 'Enter a valid name';
+
+
+	// else if (!/^[A-Za-z]+/.test(size.trim())) {
+	//   errors.size = 'Enter a valid size';
 	// }
 
-	const regex =
-		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
- 
 
-	if (!email) {
-		return 'Email required';
-	} else if (regex.test(email.toLocalLowerCase)) {
-		return 'Email address is invalid';
-	}
-	
+
+
+
+
 	return null;
 }

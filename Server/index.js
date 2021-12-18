@@ -52,6 +52,20 @@ app.post("/api/insert/give", (req, res) => {
 
 
 })
+app.post("/api/insert/take", (req, res) => {
+    const category = req.body.category
+    const description = req.body.description
+    const size = req.body.size
+    const num_pieces = req.body.num_pieces
+    const sqlInsertDonation = "insert into take (user_id,category,description,size,num_pieces)" +
+        "value (?,?,?,?,?)"
+    console.log(user.user_id)
+    db.query(sqlInsertDonation, [user.user_id, category, description, size, num_pieces], (err, result) => {
+        res.send(err)
+    })
+
+
+})
 
 app.post("/api/signIn/admin", (req, res) => {
     const email = req.body.email
