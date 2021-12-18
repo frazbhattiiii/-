@@ -1,4 +1,4 @@
-export default function empValidation({ name, lastName, portfolio,email, password, confirmPass,address,city,age}) {
+export default function empValidation({ name, lastName,email, password, confirmPass,address,city,age}) {
 	if (!name.trim()) {
 		return 'First Name required';
 	}
@@ -21,8 +21,7 @@ export default function empValidation({ name, lastName, portfolio,email, passwor
 
 	const regex =
 		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    portfolio=portfolio.toLowerCase();
-  
+    
     if(!city.trim()){
       return 'City name Required';
     }

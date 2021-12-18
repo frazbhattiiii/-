@@ -67,6 +67,21 @@ app.post("/api/insert/take", (req, res) => {
 
 
 })
+app.post("/api/insert/employee",(req,res)=>{
+    
+    const first_name = req.body.first_name
+    const last_name = req.body.last_name
+    const address = req.body.address
+    const age = req.body.age
+    const city =  req.body.city
+    const email = req.body.email
+    const password = req.body.password
+    const sqlInsert = "insert into employee(first_name,last_name,email,password,admin_id,address,"+
+                    "age,city) value (?,?,?,?,?,?,?,?)"
+    db.query(sqlInsert,[first_name,last_name,email,password,user.user_id,address,age,city],(err,result)=>{
+        res.send(err)
+    })
+})
 
 app.post("/api/signIn/admin", (req, res) => {
     const email = req.body.email
@@ -77,10 +92,10 @@ app.post("/api/signIn/admin", (req, res) => {
         if (result.length === 1) {
             user.email = result[0].email
             user.password = result[0].password
-            user.user_id = result[0].user_id
+            user.user_id = result[0].admin_id
             user.accountType = "admin"
         }
-        console.log("Current user -> " + user.email + " " + user.password + " " + user.accountType)
+        console.log("Current user -> " + user.email + " " + user.password + " " +" "+user.user_id+" "+ user.accountType)
         res.send(result)
     })
 })
@@ -94,7 +109,7 @@ app.post("/api/signIn/employee", (req, res) => {
         if (result.length === 1) {
             user.email = result[0].email
             user.password = result[0].password
-            user.user_id = result[0].user_id
+            user.user_id = result[0].emp_id
             user.accountType = "employee"
         }
         console.log("Current user -> " + user.email + " " + user.password)

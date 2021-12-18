@@ -15,22 +15,18 @@ import {
 import { Container } from '../../globalStyles';
 import empValidation from './empValidation';
 import { useHistory } from "react-router-dom";
+import  Axios  from 'axios';
 
 const EmployeeForm = () => {
-  const history = useHistory();
+	const history = useHistory();
 
-  const routeChange = () =>{ 
-    alert("Employee has been Created Successfully!")
-    let path = `/admin`; 
-    history.push(path);
-  }
+	
 	const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [portfolio, setPortfolio] = useState('');
-  const [age, setAge] = useState('');
+	const [lastName, setLastName] = useState('');
+
+	const [address, setAddress] = useState('');
+	const [city, setCity] = useState('');
+	const [age, setAge] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPass, setConfirmPass] = useState('');
@@ -39,24 +35,41 @@ const EmployeeForm = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const resultError = empValidation({ name, lastName,portfolio, email, password, confirmPass ,address,city,age});
+		const resultError = empValidation({ name, lastName,  email, password, confirmPass, address, city, age });
 
 
 		if (resultError !== null) {
 			setError(resultError);
 			return;
 		}
-		setName('');
-		setEmail('');
-    setCity('');
-    setAge('');
-    setPortfolio('');
-  
-		setPassword('');
-    setAddress('');
-		setConfirmPass('');
-		setError(null);
-		setSuccess('Application was submitted!');
+		Axios.post("http://localhost:3001/api/insert/employee",
+		{
+			first_name:name,
+			last_name:lastName,
+			address:address,
+			city:city,
+			email:email,
+			password:password,
+			age:age
+		}).then((response)=>{
+			if(response.data==""){
+				setName('');
+				setLastName('');
+				setEmail('');
+				setCity('');
+				setAge('');
+				setPassword('');
+				setAddress('');
+				setConfirmPass('');
+				setError(null);
+				setSuccess('Application was submitted!');		
+			}
+			else{
+				setSuccess(null)
+				setError(response.data.sqlMessage)
+			}
+		})
+		
 	};
 
 	const messageVariants = {
@@ -66,16 +79,14 @@ const EmployeeForm = () => {
 
 	const formData = [
 		{ label: 'First Name', value: name, onChange: (e) => setName(e.target.value), type: 'text' },
-    { label: 'Last Name', value: lastName, onChange: (e) => setLastName(e.target.value), type: 'text' },
-	
-    { label: 'Address', value: address, onChange: (e) => setAddress(e.target.value), type: 'text' },
-    { label: 'Age', value: age, onChange: (e) => setAge(e.target.value), type: 'number' },
-  
-    { label: 'City', value: city, onChange: (e) => setCity(e.target.value), type: 'text' },
-		{ label: 'Email', value: email, onChange: (e) => setEmail(e.target.value), type: 'email' },
-    { label: 'Portfolio', value: portfolio, onChange: (e) => setPortfolio(e.target.value), type: 'text' },
-    
+		{ label: 'Last Name', value: lastName, onChange: (e) => setLastName(e.target.value), type: 'text' },
 
+		{ label: 'Address', value: address, onChange: (e) => setAddress(e.target.value), type: 'text' },
+		{ label: 'Age', value: age, onChange: (e) => setAge(e.target.value), type: 'number' },
+
+		{ label: 'City', value: city, onChange: (e) => setCity(e.target.value), type: 'text' },
+		{ label: 'Email', value: email, onChange: (e) => setEmail(e.target.value), type: 'email' },
+		
 		{
 			label: 'Password',
 			value: password,
@@ -108,7 +119,7 @@ const EmployeeForm = () => {
 								</FormInputRow>
 							))}
 
-							<FormButton type="submit" onClick={routeChange}>Create Employee</FormButton>
+							<FormButton type="submit" >Create Employee</FormButton>
 						</FormWrapper>
 						{error && (
 							<FormMessage
