@@ -11,7 +11,7 @@ export default function validateRecieveForm({ size, number, address, city, check
 	if (number > 200) {
 		return 'You can donate maximum upto 200 pieces!';
 	}
-	else if (number < 0) {
+	else if (number <= 0) {
 		return 'Enter some valid number!!';
 	}
 	if (!address.trim()) {
