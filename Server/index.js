@@ -121,19 +121,19 @@ app.post("/api/signIn/user", (req, res) => {
 
 })
 
-app.post("/api/insert/userEligibity",(req,res)=>{
-    
+app.post("/api/insert/userEligibity", (req, res) => {
+
     const has_car = req.body.has_car
     const has_bike = req.body.has_bike
     const is_married = req.body.is_married
     const salary = req.body.salary
     const company = req.body.company
-    const siblings =  req.body.siblings
+    const siblings = req.body.siblings
     const children = req.body.children
-    const sqlUpdate = "update user set has_car = ? , has_bike = ?, is_married = ?,"+
-    "salary = ?, company = ?, siblings = ?, children = ? where email = ?"
-    db.query(sqlUpdate,[has_car,has_bike,is_married,salary,company,siblings,children,user.email],
-        (err,result)=>{
+    const sqlUpdate = "update user set has_car = ? , has_bike = ?, is_married = ?," +
+        "salary = ?, company = ?, siblings = ?, children = ? where email = ?"
+    db.query(sqlUpdate, [has_car, has_bike, is_married, salary, company, siblings, children, user.email],
+        (err, result) => {
             res.send(result)
         })
 })
@@ -149,22 +149,33 @@ app.post("/api/signOut/currentUser", (req, res) => {
     user.email = ""
     user.password = ""
     user.user_id = -1,
-    user.accountType = "",
-    console.log("Current user -> " + user.email + " " + user.password)
+        user.accountType = "",
+        console.log("Current user -> " + user.email + " " + user.password)
     res.send(true)
 })
 
 
-app.post("/api/check/is_eligible/user",(req,res)=>{
+app.post("/api/check/is_eligible/user", (req, res) => {
     const sqlSelect = "Select is_eligible from user where email = ? and salary"
-    db.query(sqlSelect,[user.email],(err,result)=>{
+    db.query(sqlSelect, [user.email], (err, result) => {
         res.send(result)
     })
 })
 
-app.post("/api/fetch/elligibleUsersCandidates",(req,res)=>{
-    const sqlSelect = "Select concat(first_name,' ',last_name),phone_number,"+
-    "email,salary,siblings,children,company from user where is_eligible = false and salary != null"
+app.post("/api/fetch/elligibleUserCandidates", (req, res) => {
+    const sqlSelect = "Select concat(first_name,' ',last_name) as name,phone_number," +
+        "city, email,salary,siblings,children,company,is_married,has_car,has_bike" +
+        " from user where is_eligible = false and salary"
+    db.query(sqlSelect, [], (err, result) => {
+        res.send(result)
+    })
+})
+app.post("/api/update/elligibleUserCandidates", (req, res) => {
+    const email = req.body.email
+    const sqlSelect = "update user set is_eligible = 1 where email = ?"
+    db.query(sqlSelect, [email], (err, result) => {
+        res.send(result)
+    })
 })
 
 app.get("/", (req, res) => {
