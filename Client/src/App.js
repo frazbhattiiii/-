@@ -21,6 +21,7 @@ import EligibleForm from './pages/EligiblePage';
 import DonationFormPage from './pages/DonationForm';
 import CreditPage from './pages/CreditPage';
 import adminSignIn from './pages/adminSignIn';
+import EmployeePage from './pages/employeePage';
 import EmployeeCreationPage from './pages/employeeCreationPage';
 function App() {
 	return (
@@ -40,6 +41,7 @@ function App() {
 				<Route path="/new-pricing" exact component={NewPricing} />
 				<Route path="/receive" exact component={ReceiveFormPage} />
 				<Route path="/pricing" exact component={Pricing} />
+				<Route path="/employee" exact component={EmployeePage} />
 				<Route path="/register" exact component={Register} />
 				<Route path="/contact" exact component={Contact} />
 				<Route path="/newHome" exact component={NewHome} />
