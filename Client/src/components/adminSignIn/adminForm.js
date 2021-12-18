@@ -55,7 +55,7 @@ const AdminForm = () => {
           setEmail('');
           setPassword('');
           //setloggedIn(true);
-          routeChange();
+          routeChange("/admin");
   
         }
         else {
@@ -74,7 +74,7 @@ const AdminForm = () => {
           setEmail('');
           setPassword('');
           //setloggedIn(true);
-          routeChange();//Change this method
+          routeChange("/employeeSide");
   
         }
         else {
@@ -111,9 +111,7 @@ const AdminForm = () => {
     },
   ];
   const history = useHistory();
-  const routeChange = () =>{ 
-	
-    let path = `/admin`; 
+  const routeChange = (path) =>{ 
     history.push(path);
     
 		

@@ -46,7 +46,6 @@ app.post("/api/insert/give", (req, res) => {
     const num_pieces = req.body.num_pieces
     const sqlInsertDonation = "insert into give (user_id,category,description,size,num_pieces)" +
         "value (?,?,?,?,?)"
-    console.log(user.user_id)
     db.query(sqlInsertDonation, [user.user_id, category, description, size, num_pieces], (err, result) => {
         res.send(err)
     })
@@ -60,25 +59,24 @@ app.post("/api/insert/take", (req, res) => {
     const num_pieces = req.body.num_pieces
     const sqlInsertDonation = "insert into take (user_id,category,description,size,num_pieces)" +
         "value (?,?,?,?,?)"
-    console.log(user.user_id)
     db.query(sqlInsertDonation, [user.user_id, category, description, size, num_pieces], (err, result) => {
         res.send(err)
     })
 
 
 })
-app.post("/api/insert/employee",(req,res)=>{
-    
+app.post("/api/insert/employee", (req, res) => {
+
     const first_name = req.body.first_name
     const last_name = req.body.last_name
     const address = req.body.address
     const age = req.body.age
-    const city =  req.body.city
+    const city = req.body.city
     const email = req.body.email
     const password = req.body.password
-    const sqlInsert = "insert into employee(first_name,last_name,email,password,admin_id,address,"+
-                    "age,city) value (?,?,?,?,?,?,?,?)"
-    db.query(sqlInsert,[first_name,last_name,email,password,user.user_id,address,age,city],(err,result)=>{
+    const sqlInsert = "insert into employee(first_name,last_name,email,password,admin_id,address," +
+        "age,city) value (?,?,?,?,?,?,?,?)"
+    db.query(sqlInsert, [first_name, last_name, email, password, user.user_id, address, age, city], (err, result) => {
         res.send(err)
     })
 })
@@ -95,7 +93,6 @@ app.post("/api/signIn/admin", (req, res) => {
             user.user_id = result[0].admin_id
             user.accountType = "admin"
         }
-        console.log("Current user -> " + user.email + " " + user.password + " " +" "+user.user_id+" "+ user.accountType)
         res.send(result)
     })
 })
@@ -112,7 +109,6 @@ app.post("/api/signIn/employee", (req, res) => {
             user.user_id = result[0].emp_id
             user.accountType = "employee"
         }
-        console.log("Current user -> " + user.email + " " + user.password)
         res.send(result)
     })
 })
@@ -157,15 +153,13 @@ app.post("/api/currentUser", (req, res) => {
     const info = []
     info[0] = user.email
     info[1] = user.accountType
-    console.log(info)
     res.send(info)
 })
 app.post("/api/signOut/currentUser", (req, res) => {
     user.email = ""
     user.password = ""
-    user.user_id = -1,
-        user.accountType = "",
-        console.log("Current user -> " + user.email + " " + user.password)
+    user.user_id = -1
+    user.accountType = ""
     res.send(true)
 })
 
@@ -187,10 +181,51 @@ app.post("/api/fetch/elligibleUserCandidates", (req, res) => {
 })
 app.post("/api/update/elligibleUserCandidates", (req, res) => {
     const email = req.body.email
-    const sqlSelect = "update user set is_eligible = 1 where email = ?"
+    const sqlSelect = `update user set is_eligible = 1, admin_id = ${user.user_id} where email = ?`
     db.query(sqlSelect, [email], (err, result) => {
         res.send(result)
     })
+})
+app.post("/api/update/give",(req,res)=>{
+    const donation_id = req.body.donation_id
+    const sqlUpdate = `update give set is_done = 1, emp_id = ${user.user_id} where 
+                        donation_id = ?`
+    db.query(sqlUpdate,[donation_id],(err,result)=>{
+        res.send(result)
+    })
+})
+app.post("/api/update/take",(req,res)=>{
+    const donation_id = req.body.donation_id
+    const sqlUpdate = `update take set is_done = 1, emp_id = ${user.user_id} where 
+                        donation_id = ?`
+    db.query(sqlUpdate,[donation_id],(err,result)=>{
+        res.send(result)
+    })
+})
+
+app.post("/api/fetch/empUI/giveDone", (req, res) => {
+    const giveDone = "select * from empGive where is_done != 0"
+    db.query(giveDone, [], (err, result) => {
+        res.send(result)
+    })
+})
+app.post("/api/fetch/empUI/giveRem", (req, res) => {
+    const giveRem = "select * from empGive where is_done = 0"
+    db.query(giveRem, [], (err, result) => {
+        res.send(result)
+    })    
+})
+app.post("/api/fetch/empUI/takeDone", (req, res) => {
+    const takeDone = "select * from empTake where is_done != 0"
+    db.query(takeDone, [], (err, result) => {
+        res.send(result)
+    })    
+})
+app.post("/api/fetch/empUI/takeRem", (req, res) => {
+    const takeRem = "select * from empTake where is_done = 0"
+    db.query(takeRem, [], (err, result) => {
+        res.send(result)
+    })    
 })
 
 app.get("/", (req, res) => {

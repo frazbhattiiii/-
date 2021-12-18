@@ -36,8 +36,9 @@ function AdminInterface() {
 		Axios.post("http://localhost:3001/api/fetch/elligibleUserCandidates")
 			.then((response) => {
 				setUsers(response.data)
+				console.log(users)
 			})
-	})
+	},users)
 	const routeChange = () => {
 
 		let path = `/create-Employee`;

@@ -41,7 +41,7 @@ function App() {
 				<Route path="/new-pricing" exact component={NewPricing} />
 				<Route path="/receive" exact component={ReceiveFormPage} />
 				<Route path="/pricing" exact component={Pricing} />
-				<Route path="/employee" exact component={EmployeePage} />
+				<Route path="/employeeSide" exact component={EmployeePage} />
 				<Route path="/register" exact component={Register} />
 				<Route path="/contact" exact component={Contact} />
 				<Route path="/newHome" exact component={NewHome} />

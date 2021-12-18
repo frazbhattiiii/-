@@ -1,9 +1,10 @@
-import React,{useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
 import AdminForm from '../components/adminSignIn/adminForm'
+import Navbar from '../components/Navbar/Navbar';
 import Axios from 'axios'
 function AdminSignIn() {
-  const history = useHistory();
+	const history = useHistory();
 
 	const routeChange = (path) => {
 		history.push(path);
@@ -16,21 +17,22 @@ function AdminSignIn() {
 				if (response.data[1] == "admin") {
 					routeChange("/admin")
 				}
-				else if(response.data[1] == "employee") {
+				else if (response.data[1] == "employee") {
 					routeChange("/employeeSide") //Change it when UI is updated
 				}
-				else if(response.data[1] == "user") {
-					routeChange("/newHome") 
+				else if (response.data[1] == "user") {
+					routeChange("/newHome")
 				}
-				
+
 
 			})
-	})  
-  return (
-    <div>
-      <AdminForm />
-    </div>
-  )
+	})
+	return (
+		<div>
+			<Navbar />
+			<AdminForm />
+		</div>
+	)
 }
 
 export default AdminSignIn

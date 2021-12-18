@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { onHoldData } from '../../data/onHoldData';
 import { receiveData } from '../../data/receivedData';
@@ -17,236 +17,235 @@ import {
 	PricingCardFeature,
 	PricingCard,
 	priceButton,
-  employeeButton,
-  PriceImageWrapper,
-  PriceImage
+	employeeButton,
+	PriceImageWrapper,
+	PriceImage
 } from './employeeStyle';
-import { HeroButton ,HeroText} from '../Hero/HeroStyles';
-
+import { HeroButton, HeroText } from '../Hero/HeroStyles';
 import { useHistory } from "react-router-dom";
 import { donorsData } from '../../data/donors';
-
+import Axios from 'axios'
 
 function EmployeeInterface() {
-  
-	const history = useHistory();
-  
-
-const [buttonText, setButtonText] = useState("Not Delivered"); 
-const [buttonText2, setButtonText2] = useState("Have to pick up"); 
-  const routeChange = () =>{ 
-	
-    let path = `/create-Employee`; 
-    history.push(path);
-  }
-  const changeText = (text) => {
-    
-    setButtonText(text)
-  
-  
-  }
-  const changeText2 = (text) => {
-    
-    setButtonText2(text)
-  
-  
-  }
+	const [buttonText, setButtonText] = useState("Not Delivered");
+	const [buttonText2, setButtonText2] = useState("Have to pick up");
+	const [giveDone, setGiveDone] = useState([])
+	const [giveRem, setGiveRem] = useState([])
+	const [takeDone, setTakeDone] = useState([])
+	const [takeRem, setTakeRem] = useState([])
 
 
+	useEffect(() => {
+		Axios.post("http://localhost:3001/api/fetch/empUI/giveDone")
+			.then((response) => {
+				setGiveDone(response.data)
+
+			})
+		Axios.post("http://localhost:3001/api/fetch/empUI/giveRem")
+			.then((response) => {
+				setGiveRem(response.data)
+
+			})
+		Axios.post("http://localhost:3001/api/fetch/empUI/takeDone")
+			.then((response) => {
+				setTakeDone(response.data)
+
+			})
+		Axios.post("http://localhost:3001/api/fetch/empUI/takeRem")
+			.then((response) => {
+				setTakeRem(response.data)
+
+			})
+	}, giveDone, giveRem, takeDone, takeRem)
+
+	const handleGiveRem = (e) => {
+		giveRem.map((item) => {
+			if (e.target.value == item.donation_id) {
+				giveDone.push(item)
+			}
+		})
+		Axios.post("http://localhost:3001/api/update/give",
+			{
+				donation_id: e.target.value
+			}).then((response) => {
+				console.log(response)
+				if (response.data.affectedRows != 0) {
+					setGiveRem(giveRem.filter((item) => {
+						return item.donation_id != e.target.value
+					}))
+				} else {
+					console.log("Error occured! Please Login again");
+					return;
+				}
+
+			})
+		// setGiveRem(giveRem.filter((item,i)=>{
+		// 	return e.target.value!=i
+		// }))
+	}
+	const handleTakeRem = (e) => {
+		takeRem.map((item) => {
+			if (e.target.value == item.donation_id) {
+				takeDone.push(item)
+			}
+		})
+		Axios.post("http://localhost:3001/api/update/take",
+			{
+				donation_id: e.target.value
+			}).then((response) => {
+				console.log(response)
+				if (response.data.affectedRows != 0) {
+					setTakeRem(takeRem.filter((item) => {
+						return item.donation_id != e.target.value
+					}))
+				} else {
+					console.log("Error occured! Please Login again");
+					return;
+				}
+
+			})
+	}
 	return (
-    <div >
-		<IconContext.Provider value={{ color: '#a9b3c1', size: '1rem' }}>
-    <PricingSection id="pricing">
-				<PricingWrapper>
-        
-					<Heading> Donors </Heading>
+		<div >
+			<IconContext.Provider value={{ color: '#a9b3c1', size: '1rem' }}>
+				<PricingSection id="pricing">
+					<PricingWrapper>
 
-					<TextWrapper
-						mb="1.4rem"
-						weight="600"
-						size="1.1rem"
-						color="white"
-						align="center"
-					>
-						 
-					</TextWrapper>
-					<PricingContainer>
-          
-						{donorsData.map((card, index) => (
-							<PricingCard key={index}>
-								<PricingCardInfo>
-                <PriceImageWrapper>
-			
-              </PriceImageWrapper>
-									<PricingCardPlan>{card.Name}</PricingCardPlan>
-									<PricingCardCost>{card.Phone}</PricingCardCost>
-									<PricingCardText>{card.Email}</PricingCardText>
-                  <PricingCardText>{card.Category}</PricingCardText>
-                  <PricingCardText>{card.Size}</PricingCardText>
-                  <PricingCardText>{card.peice}</PricingCardText>
-                 
-									
-								
-                  			
-									<Button >
-                      
-                    Received
-                   
-									</Button>
-											
-								
+						<Heading> Donors </Heading>
 
-								</PricingCardInfo>
-							</PricingCard>
-						))}
-					</PricingContainer>
-      
-				</PricingWrapper>
-			</PricingSection> 
-      <PricingSection id="pricing">
-				<PricingWrapper>
-        
-					<Heading> Pick Up Remaining </Heading>
+						<TextWrapper
+							mb="1.4rem"
+							weight="600"
+							size="1.1rem"
+							color="white"
+							align="center"
+						>
 
-					<TextWrapper
-						mb="1.4rem"
-						weight="600"
-						size="1.1rem"
-						color="white"
-						align="center"
-					>
-						 
-					</TextWrapper>
-					<PricingContainer>
-          
-						{donorsData.map((card, index) => (
-							<PricingCard key={index}>
-								<PricingCardInfo>
-                <PriceImageWrapper>
-			
-              </PriceImageWrapper>
-									<PricingCardPlan>{card.Name}</PricingCardPlan>
-									<PricingCardCost>{card.Phone}</PricingCardCost>
-									<PricingCardText>{card.Email}</PricingCardText>
-                  <PricingCardText>{card.Category}</PricingCardText>
-                  <PricingCardText>{card.Size}</PricingCardText>
-                  <PricingCardText>{card.peice}</PricingCardText>
-                 
-									
-								
-                  			
-									<Button onClick={() => changeText2("Picked")}>
-                      
-                    {buttonText2}
-                   
-									</Button>
-											
-								
+						</TextWrapper>
+						<PricingContainer>
 
-								</PricingCardInfo>
-							</PricingCard>
-						))}
-					</PricingContainer>
-      
-				</PricingWrapper>
-			</PricingSection> 
-			<PricingSection id="pricing">
-				<PricingWrapper>
-        
-					<Heading> Received </Heading>
+							{giveDone.map((card, index) => (
+								<PricingCard key={index}>
+									<PricingCardInfo>
+										<PriceImageWrapper>
 
-					<TextWrapper
-						mb="1.4rem"
-						weight="600"
-						size="1.1rem"
-						color="white"
-						align="center"
-					>
-						 
-					</TextWrapper>
-					<PricingContainer>
-          
-						{receiveData.map((card, index) => (
-							<PricingCard key={index}>
-								<PricingCardInfo>
-                <PriceImageWrapper>
-			
-              </PriceImageWrapper>
-									<PricingCardPlan>{card.Name}</PricingCardPlan>
-									<PricingCardCost>{card.Phone}</PricingCardCost>
-									<PricingCardText>{card.Email}</PricingCardText>
-                  <PricingCardText>{card.Salary}</PricingCardText>
-                  <PricingCardText>{card.siblings}</PricingCardText>
-                  <PricingCardText>{card.Childrens}</PricingCardText>
-                  <PricingCardText>{card.Company}</PricingCardText>
-									
-								
-                  			
-									<Button >
-                      
-                    Received
-                   
-									</Button>
-											
-								
+										</PriceImageWrapper>
+										<PricingCardPlan>{card.name}</PricingCardPlan>
+										<PricingCardCost>{card.number}</PricingCardCost>
+										<PricingCardText>{card.email}</PricingCardText>
+										<PricingCardText>{card.category}</PricingCardText>
+										<PricingCardText>{card.size}</PricingCardText>
+										<PricingCardText>{card.pieces}</PricingCardText>
+										<PricingCardText>{card.description}</PricingCardText>
+									</PricingCardInfo>
+								</PricingCard>
+							))}
+						</PricingContainer>
+					</PricingWrapper>
+				</PricingSection>
+				<PricingSection id="pricing">
+					<PricingWrapper>
+						<Heading> Pick Up Remaining </Heading>
+						<TextWrapper
+							mb="1.4rem"
+							weight="600"
+							size="1.1rem"
+							color="white"
+							align="center"
+						>
+						</TextWrapper>
+						<PricingContainer>
+							{giveRem.map((card, index) => (
+								<PricingCard key={index}>
+									<PricingCardInfo>
+										<PriceImageWrapper>
+										</PriceImageWrapper>
+										<PricingCardPlan>{card.name}</PricingCardPlan>
+										<PricingCardCost>{card.number}</PricingCardCost>
+										<PricingCardText>{card.email}</PricingCardText>
+										<PricingCardText>{card.category}</PricingCardText>
+										<PricingCardText>{card.size}</PricingCardText>
+										<PricingCardText>{card.pieces}</PricingCardText>
+										<PricingCardText>{card.description}</PricingCardText>
+										<Button onClick={handleGiveRem} value={card.donation_id}>
+											Picked UP
+										</Button>
+									</PricingCardInfo>
+								</PricingCard>
+							))}
+						</PricingContainer>
+					</PricingWrapper>
+				</PricingSection>
+				<PricingSection id="pricing">
+					<PricingWrapper>
+						<Heading> Received </Heading>
+						<TextWrapper
+							mb="1.4rem"
+							weight="600"
+							size="1.1rem"
+							color="white"
+							align="center"
+						>
+						</TextWrapper>
+						<PricingContainer>
+							{takeDone.map((card, index) => (
+								<PricingCard key={index}>
+									<PricingCardInfo>
+										<PriceImageWrapper>
+										</PriceImageWrapper>
+										<PricingCardPlan>{card.name}</PricingCardPlan>
+										<PricingCardCost>{card.number}</PricingCardCost>
+										<PricingCardText>{card.email}</PricingCardText>
+										<PricingCardText>{card.category}</PricingCardText>
+										<PricingCardText>{card.size}</PricingCardText>
+										<PricingCardText>{card.pieces}</PricingCardText>
+										<PricingCardText>{card.description}</PricingCardText>
+									</PricingCardInfo>
+								</PricingCard>
+							))}
+						</PricingContainer>
 
-								</PricingCardInfo>
-							</PricingCard>
-						))}
-					</PricingContainer>
-      
-				</PricingWrapper>
-			</PricingSection>
-      <PricingSection id="pricing">
-				<PricingWrapper>
-        
-					<Heading> On Hold </Heading>
+					</PricingWrapper>
+				</PricingSection>
+				<PricingSection id="pricing">
+					<PricingWrapper>
 
-					<TextWrapper
-						mb="1.4rem"
-						weight="600"
-						size="1.1rem"
-						color="white"
-						align="center"
-					>
-						 
-					</TextWrapper>
-					<PricingContainer>
-          
-						{onHoldData.map((card, index) => (
-							<PricingCard key={index}>
-								<PricingCardInfo>
-                <PriceImageWrapper>
-			
-              </PriceImageWrapper>
-									<PricingCardPlan>{card.Name}</PricingCardPlan>
-									<PricingCardCost>{card.Phone}</PricingCardCost>
-									<PricingCardText>{card.Email}</PricingCardText>
-                  <PricingCardText>{card.Salary}</PricingCardText>
-                  <PricingCardText>{card.siblings}</PricingCardText>
-                  <PricingCardText>{card.Childrens}</PricingCardText>
-                  <PricingCardText>{card.Company}</PricingCardText>
-									
-								
-                  			
-									<Button onClick={() => changeText("Delivered")}>
-                     {buttonText} 
-                
-                   
-									</Button>
-											
-								
+						<Heading> On Hold </Heading>
 
-								</PricingCardInfo>
-							</PricingCard>
-						))}
-					</PricingContainer>
-      
-				</PricingWrapper>
-			</PricingSection>
-      
-		</IconContext.Provider>
-  </div>
+						<TextWrapper
+							mb="1.4rem"
+							weight="600"
+							size="1.1rem"
+							color="white"
+							align="center"
+						>
+						</TextWrapper>
+						<PricingContainer>
+							{takeRem.map((card, index) => (
+								<PricingCard key={index}>
+									<PricingCardInfo>
+										<PriceImageWrapper>
+
+										</PriceImageWrapper>
+										<PricingCardPlan>{card.name}</PricingCardPlan>
+										<PricingCardCost>{card.number}</PricingCardCost>
+										<PricingCardText>{card.email}</PricingCardText>
+										<PricingCardText>{card.category}</PricingCardText>
+										<PricingCardText>{card.size}</PricingCardText>
+										<PricingCardText>{card.pieces}</PricingCardText>
+										<PricingCardText>{card.description}</PricingCardText>
+										<Button onClick={handleTakeRem} value={card.donation_id}>
+											{buttonText}
+										</Button>
+									</PricingCardInfo>
+								</PricingCard>
+							))}
+						</PricingContainer>
+					</PricingWrapper>
+				</PricingSection>
+
+			</IconContext.Provider>
+		</div>
 	);
 
 }
