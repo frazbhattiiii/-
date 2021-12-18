@@ -1,4 +1,4 @@
-export default function validateForm({ email, password, confirmPass }) {
+export default function validateForm({ email, password }) {
 
 	// else if (!/^[A-Za-z]+/.test(name.trim())) {
 	//   errors.name = 'Enter a valid name';

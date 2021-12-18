@@ -6,21 +6,27 @@ import Axios from 'axios';
 function SignUp() {
 	const history = useHistory();
 
-	const routeChange = () => {
-
-		let path = `/newHome`;
+	const routeChange = (path) => {
 		history.push(path);
 
 	}
 	useEffect(() => {
 		Axios.post("http://localhost:3001/api/currentUser")
 			.then((response) => {
-				if (response.data !== "") {
-					console.log(response.data)
-					routeChange()
+				console.log(response.data)
+				if (response.data[1] == "admin") {
+					routeChange("/admin")
 				}
+				else if(response.data[1] == "employee") {
+					routeChange("/employeeSide") //Change it when UI is updated
+				}
+				else if(response.data[1] == "user") {
+					routeChange("/newHome") 
+				}
+				
+
 			})
-	})
+	})  
 	return (
 		<>
 		<Navbar></Navbar>
