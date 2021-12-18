@@ -45,7 +45,7 @@ const AdminForm = () => {
     }
     console.log(checkeditem)
     console.log(checkeditem === 2)
-    if(checkeditem===2){//Why is it Hppening
+    if(checkeditem!==2){//Why is it Hppening
       console.log("Current user -> " + email + " " + password)
       Axios.post("http://localhost:3001/api/signIn/admin",
       {

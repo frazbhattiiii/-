@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 
 import {
   FormColumn,
@@ -14,71 +14,86 @@ import {
   CheckBox,
 } from "./eligiblityStyles";
 import { Container } from "../../globalStyles";
-import {useHistory} from  "react-router-dom";
+import { useHistory } from "react-router-dom";
 import validateEligible from "./eligibiltyFormValidation";
+import Axios  from "axios";
 const Eligible = () => {
-  
-  const [isChecked, setIsChecked] = useState(false);
-  const [able, setAble] = useState(true);
+
+  const [selected, setSelected] = useState([])
   const [salary, setSalary] = useState("");
   const [children, setChildren] = useState("");
   const [siblings, setSiblings] = useState("");
-  const [showNext, setshowNext] = useState("");
-  const [address, setAddress] = useState("");
-   const[company,setCompany]= useState("");
-  const [number, setNumber] = useState("");
+  const [company, setCompany] = useState("");
 
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
-  const checkBoxData=[
-    {value:"Car"},
-    {value:"Bike"},
-    
-    
-    
-];
+  const checkBoxData = [
+    { value: "Car" },
+    { value: "Bike" },
+
+
+
+  ];
 
   const handleSubmit = (e) => {
+    console.log(selected)
     e.preventDefault();
-    
+
     const checkBox = e.target.value;
-    
+
     const resultError = validateEligible({
+      selected,
       salary,
-        children,
+      children,
       siblings,
       company,
     });
-
+    let has_car = false
+    let has_bike = false
+    let is_married = false
+    selected.forEach(item => {
+      if (item == 1) {
+        has_car = true
+      }
+      else if (item == 2) {
+        has_bike = true
+      }
+      else if (item == 3) {
+        is_married = true
+      }
+    })
     if (resultError !== null) {
+      setSuccess(null)
       setError(resultError);
       return;
     }
+    Axios.post("http://localhost:3001/api/insert/userEligibity",
+      {
+        has_car: has_car,
+        has_bike: has_bike,
+        is_married: is_married,
+        salary: salary,
+        company: company,
+        siblings: siblings,
+        children: children,
+      }).then((response) => {
+        console.log(response.data.affectedRows)
+        if (response.data.affectedRows!=0) {
+          setSalary("");
+          setSiblings("");
+          setCompany("");
+          setChildren("");
+          setError(null);
+          setSuccess("Successfull! Our Employee will contact you");
+          routeChange();
+        } else {
+          setSuccess(null)
+          setError("Error occured! Please Login again");
+          return;
+        }
+      })
 
-    
-      alert('Your Request is submitted and you will receive the response Shortly!')
 
-      
-        
-          
-      
-      
-    
-    
-    console.log(checkBox);
-    
-    setSalary("");
-    setNumber("");
-    setSiblings("");
-    setCompany("");
-
-    setAddress("");
- 
-    setChildren("");
-  
-    setError(null);
-    setSuccess("Successfully donated!");
-      routeChange();
 
   };
 
@@ -87,9 +102,9 @@ const Eligible = () => {
     animate: { y: 0, opasiblings: 1, transition: { delay: 0.2, duration: 0.4 } },
   };
 
-  
 
-  
+
+
   const eligibilityformData = [
     {
       label: "Your Salary(PKR)",
@@ -104,7 +119,7 @@ const Eligible = () => {
       onChange: (e) => setCompany(e.target.value),
       type: "text",
     },
-   
+
     {
       label: "Your number of Siblings",
       value: siblings,
@@ -119,26 +134,30 @@ const Eligible = () => {
     }
   ];
   const history = useHistory();
-  const routeChange = () =>{ 
-	
-    let path = `/receive`; 
+  const routeChange = () => {
+
+    let path = `/receive`;
     history.push(path);
-    
-		
+
+
   }
   const handleOnChange = (e) => {
-    setIsChecked(!isChecked);
-    const checked = e.target.checked;
-    
-    // to get the checked value
-    const checkedValue = e.target.value;
-   
-        // to get the checked name
-    const checkedName = e.target.name;
+    let set = selected
+    if (e.target.checked) {
+      set.push(parseInt(e.target.value))
+    }
+    else {
+      set = set.filter((item) => {
+        return item != e.target.value
+      })
+    }
+    setSelected(set)
   }
 
 
-  
+
+
+
   return (
     <FormSection>
       <Container>
@@ -147,22 +166,22 @@ const Eligible = () => {
             <FormTitle>Eligiblilty Criteria
             </FormTitle>
             <FormWrapper onSubmit={handleSubmit}>
-              
-                
+
+
 
               <CheckBox>
                 <h3>Select what you own</h3>
-                <div id="checklist" onClick={handleOnChange}>
-                  <input id="car" type="checkbox" size="r" value="car"  ></input>
+                <div id="checklist">
+                  <input id="car" onClick={handleOnChange} type="checkbox" size="r" value={1}  ></input>
                   <label for="car">Car</label>
-                  <input id="bike" type="checkbox" size="r" value="bike" ></input>
+                  <input id="bike" onClick={handleOnChange} type="checkbox" size="r" value={2} ></input>
                   <label for="bike">Bike</label>
-                  <input id="Married" type="checkbox" size="r" value="Married" ></input>
-                  <label for="bike">Married</label>
-                  
+                  <input id="Married" onClick={handleOnChange} type="checkbox" size="r" value={3} ></input>
+                  <label for="Married">Married</label>
+
                 </div>
               </CheckBox>
-              
+
               {eligibilityformData.map((el, index) => (
                 <FormInputRow key={index} >
                   <FormLabel>{el.label}</FormLabel>
@@ -171,7 +190,7 @@ const Eligible = () => {
                     placeholder={`Enter ${el.label.toLocaleLowerCase()}`}
                     value={el.value}
                     onChange={el.onChange}
-                    
+
                   />
                 </FormInputRow>
               ))}
@@ -186,7 +205,7 @@ const Eligible = () => {
                 animate="animate"
                 error
               >
-                
+
                 {error}
               </FormMessage>
             )}

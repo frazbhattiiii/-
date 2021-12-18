@@ -37,6 +37,7 @@ app.post("/api/insert/user", (req, res) => {
         res.send(err);
     })
 })
+
 app.post("/api/insert/give", (req, res) => {
     const category = req.body.category
     const description = req.body.description
@@ -51,6 +52,7 @@ app.post("/api/insert/give", (req, res) => {
 
 
 })
+
 app.post("/api/signIn/admin", (req, res) => {
     const email = req.body.email
     const password = req.body.password
@@ -66,6 +68,7 @@ app.post("/api/signIn/admin", (req, res) => {
         res.send(result)
     })
 })
+
 app.post("/api/signIn/employee", (req, res) => {
     const email = req.body.email
     const password = req.body.password
@@ -77,7 +80,7 @@ app.post("/api/signIn/employee", (req, res) => {
             user.password = result[0].password
             user.user_id = result[0].user_id
         }
-        console.log("Current usere -> " + user.email + " " + user.password)
+        console.log("Current user -> " + user.email + " " + user.password)
         res.send(result)
     })
 })
@@ -100,6 +103,23 @@ app.post("/api/signIn/user", (req, res) => {
 
 })
 
+app.post("/api/insert/userEligibity",(req,res)=>{
+    
+    const has_car = req.body.has_car
+    const has_bike = req.body.has_bike
+    const is_married = req.body.is_married
+    const salary = req.body.salary
+    const company = req.body.company
+    const siblings =  req.body.siblings
+    const children = req.body.children
+    const sqlUpdate = "update user set has_car = ? , has_bike = ?, is_married = ?,"+
+    "salary = ?, company = ?, siblings = ?, children = ? where email = ?"
+    db.query(sqlUpdate,[has_car,has_bike,is_married,salary,company,siblings,children,user.email],
+        (err,result)=>{
+            res.send(result)
+        })
+})
+
 app.post("/api/currentUser", (req, res) => {
     console.log("Current user -> " + user.email + " " + user.password + " " + user.user_id)
     res.send(user.email)
@@ -110,6 +130,14 @@ app.post("/api/signOut/currentUser", (req, res) => {
     user.user_id = -1
     console.log("Current user -> " + user.email + " " + user.password)
     res.send(true)
+})
+
+
+
+
+app.post("/api/fetch/elligibleUsersCandidates",(req,res)=>{
+    const sqlSelect = "Select concat(first_name,' ',last_name),phone_number,"+
+    "email,salary,siblings,children,company from user where is_eligible = false and salary != null"
 })
 
 app.get("/", (req, res) => {

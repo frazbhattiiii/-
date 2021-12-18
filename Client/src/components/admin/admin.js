@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { usersData } from '../../data/usersData';
 import { Button, Heading, TextWrapper } from '../../globalStyles';
@@ -22,6 +22,7 @@ import {
 import { HeroButton ,HeroText} from '../Hero/HeroStyles';
 import './admin.css';
 import { useHistory } from "react-router-dom";
+import  Axios  from 'axios';
 
 
 
@@ -31,6 +32,13 @@ function AdminInterface() {
   
 
 const [buttonText, setButtonText] = useState("On Hold"); 
+const [users, setUsers] = useState(null)
+useEffect(()=>{
+	Axios.post("http://localhost:3001/api/fetch/elligibleUsersCandidates")
+	.then((response)=>{
+
+	})
+})
   const routeChange = () =>{ 
 	
     let path = `/create-Employee`; 
