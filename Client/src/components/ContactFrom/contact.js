@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import emailjs from 'emailjs-com';
 import 'react-toastify/dist/ReactToastify.min.css';
 import './contact.min.css';
+import Axios from 'axios';
 
 const ContactForm = () => {
   const {
@@ -29,32 +30,39 @@ const ContactForm = () => {
   };
 
   // Function called on submit that uses emailjs to send email of valid contact form
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     // Destrcture data object
     const { name, email, subject, message } = data;
-    try {
-      // Disable form while processing submission
-      setDisabled(true);
 
-      // Define template params
-      const templateParams = {
-        name,
-        email,
-        subject,
-        message
-      };
+    // Disable form while processing submission
+    setDisabled(true);
 
-      toastifySuccess();
+    // Define template params
+    const templateParams = {
+      name,
+      email,
+      subject,
+      message
+    };
+    console.log(data)
+    Axios.post("http://localhost:3001/api/insert/feedback",
+      {
+        feedback: data.message
+      })
+      .then((response) => {
+        console.log(response)
+        if (response.data == "") {
+          toastifySuccess();
 
-      // Reset contact form fields after submission
-      reset();
-      // Display success toast
-     
-      // Re-enable form submission
-      setDisabled(false);
-    } catch (e) {
-      console.log(e);
-    }
+          // Reset contact form fields after submission
+          reset();
+          // Display success toast
+
+          // Re-enable form submission
+          setDisabled(false);
+        }
+      })
+      return
   };
 
   return (
@@ -133,6 +141,7 @@ const ContactForm = () => {
                     <textarea
                       rows={3}
                       name='message'
+
                       {...register('message', {
                         required: true
                       })}
