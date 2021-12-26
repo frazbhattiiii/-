@@ -227,7 +227,21 @@ app.post("/api/fetch/empUI/takeRem", (req, res) => {
         res.send(result)
     })    
 })
-
+app.post("/api/insert/feedback",(req,res)=>{
+    const feedback = req.body.feedback
+    const sqlInsert = "insert into feedback (user_id,feedback)"
+                        +"values (?,?)"
+    db.query(sqlInsert,[user.user_id,feedback],(err,result)=>{
+        res.send(err)
+    })
+})
+app.post("/api/update/user/sponsor",(req,res)=>{
+    const amount = req.body.amount
+    const sqlUpdate = "update user set amount_sponsored = ? where user_id = ?"
+    db.query(sqlUpdate,[amount,user.user_id],(err,result)=>{
+        res.send(result)
+    })
+})
 app.get("/", (req, res) => {
     res.send("Hello World")
 })
