@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
 import {
 	FormColumn,
 	FormWrapper,
@@ -16,6 +17,7 @@ import validateRegisterForm from './validateRegisterForm';
 import Axios from 'axios'
 
 const Form = () => {
+	const history = useHistory();
 	const [firstName, setfirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [address, setAddress] = useState('');
@@ -30,7 +32,15 @@ const Form = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+	
 		const resultError = validateRegisterForm({ firstName, lastName, email, password, confirmPass, address, city, phone_number, age });
+		
+		const routeChange = () =>{ 
+			let path ="/signin"
+			history.push(path);
+			
+			
+		}
 
 
 		if (resultError !== null) {
@@ -63,7 +73,8 @@ const Form = () => {
 				setAddress('');
 				setConfirmPass('');
 				setError(null);
-				setSuccess('Application was submitted!');		
+				setSuccess('Application was submitted!');	
+				routeChange();	
 			}
 			else{
 				setSuccess(null)
@@ -120,7 +131,7 @@ const Form = () => {
 								</FormInputRow>
 							))}
 
-							<FormButton type="submit">Register</FormButton>
+							<FormButton type="submit" >Register</FormButton>
 						</FormWrapper>
 						{error && (
 							<FormMessage

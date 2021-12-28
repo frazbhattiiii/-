@@ -36,7 +36,7 @@ function AdminInterface() {
 		Axios.post("http://localhost:3001/api/fetch/elligibleUserCandidates")
 			.then((response) => {
 				setUsers(response.data)
-				console.log(users)
+				console.log(response)
 			})
 	},users)
 	const routeChange = () => {
